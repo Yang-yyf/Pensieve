@@ -20,16 +20,16 @@
   <title>基于已有海光硬件的安全部署方案 - 我如朝露降人间</title>
 
   
-    <meta name="description" content="基于已有海光硬件的安全部署方案项目背景客户购买指定海光型号的服务器，具备海光CSV的安全能力。运维同学需要将完整的符信产品部署至客户环境。客户环境可能联网，可能不联网，涉及到的安全能力需要区分此种区别。 要求方案需要具备一定的安全威胁假设，核心目标为保护计算节点中橙色数据的安全。 安全威胁 交付时需要一并交付客户Root账户，故客户侧掌握服务器的全部运维权限。 客户可能会采取任何行为尝试获取敏感数">
+    <meta name="description" content="基于已有海光硬件的安全部署方案项目背景客户购买指定海光型号的服务器，具备海光CSV的安全能力。运维同学需要将完整的符信产品部署至客户环境。客户环境可能联网，可能不联网，涉及到的安全能力需要区分此种区别。 安全威胁 交付时需要一并交付客户Root账户，故客户侧掌握服务器的全部运维权限。 客户可能会采取任何行为尝试获取敏感数据，以往客户已经证明客户侧会试图将我们的数据进行转储并进一步利用。 系统任何告">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于已有海光硬件的安全部署方案">
 <meta property="og:url" content="https://docs.zean-ai.cc/2025/08/19/%E8%BD%AF%E4%BB%B6%E9%83%A8%E7%BD%B2%E5%AE%89%E5%85%A8%E5%8A%A0%E5%9B%BA/">
 <meta property="og:site_name" content="我如朝露降人间">
-<meta property="og:description" content="基于已有海光硬件的安全部署方案项目背景客户购买指定海光型号的服务器，具备海光CSV的安全能力。运维同学需要将完整的符信产品部署至客户环境。客户环境可能联网，可能不联网，涉及到的安全能力需要区分此种区别。 要求方案需要具备一定的安全威胁假设，核心目标为保护计算节点中橙色数据的安全。 安全威胁 交付时需要一并交付客户Root账户，故客户侧掌握服务器的全部运维权限。 客户可能会采取任何行为尝试获取敏感数">
+<meta property="og:description" content="基于已有海光硬件的安全部署方案项目背景客户购买指定海光型号的服务器，具备海光CSV的安全能力。运维同学需要将完整的符信产品部署至客户环境。客户环境可能联网，可能不联网，涉及到的安全能力需要区分此种区别。 安全威胁 交付时需要一并交付客户Root账户，故客户侧掌握服务器的全部运维权限。 客户可能会采取任何行为尝试获取敏感数据，以往客户已经证明客户侧会试图将我们的数据进行转储并进一步利用。 系统任何告">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zean-image.oss-cn-hangzhou.aliyuncs.com/docs/basic/%E5%A4%B4%E5%83%8F.png">
 <meta property="article:published_time" content="2025-08-19T08:45:30.518Z">
-<meta property="article:modified_time" content="2025-08-26T05:37:34.839Z">
+<meta property="article:modified_time" content="2025-08-27T03:21:35.274Z">
 <meta property="article:author" content="Zean">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://zean-image.oss-cn-hangzhou.aliyuncs.com/docs/basic/%E5%A4%B4%E5%83%8F.png">
@@ -50,7 +50,7 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Zean","sameAs":[],"image":"https://zean-image.oss-cn-hangzhou.aliyuncs.com/docs/basic/%E5%A4%B4%E5%83%8F.png"},"dateCreated":"2025-08-19T16:45:30+08:00","dateModified":"2025-08-26T13:37:34+08:00","datePublished":"2025-08-19T16:45:30+08:00","description":"","headline":"基于已有海光硬件的安全部署方案","mainEntityOfPage":{"@type":"WebPage","@id":"https://docs.zean-ai.cc/2025/08/19/%E8%BD%AF%E4%BB%B6%E9%83%A8%E7%BD%B2%E5%AE%89%E5%85%A8%E5%8A%A0%E5%9B%BA/"},"publisher":{"@type":"Organization","name":"Zean","sameAs":[],"image":"https://zean-image.oss-cn-hangzhou.aliyuncs.com/docs/basic/%E5%A4%B4%E5%83%8F.png","logo":{"@type":"ImageObject","url":"https://zean-image.oss-cn-hangzhou.aliyuncs.com/docs/basic/%E5%A4%B4%E5%83%8F.png"}},"url":"https://docs.zean-ai.cc/2025/08/19/%E8%BD%AF%E4%BB%B6%E9%83%A8%E7%BD%B2%E5%AE%89%E5%85%A8%E5%8A%A0%E5%9B%BA/","image":[]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Zean","sameAs":[],"image":"https://zean-image.oss-cn-hangzhou.aliyuncs.com/docs/basic/%E5%A4%B4%E5%83%8F.png"},"dateCreated":"2025-08-19T16:45:30+08:00","dateModified":"2025-08-27T11:21:35+08:00","datePublished":"2025-08-19T16:45:30+08:00","description":"","headline":"基于已有海光硬件的安全部署方案","mainEntityOfPage":{"@type":"WebPage","@id":"https://docs.zean-ai.cc/2025/08/19/%E8%BD%AF%E4%BB%B6%E9%83%A8%E7%BD%B2%E5%AE%89%E5%85%A8%E5%8A%A0%E5%9B%BA/"},"publisher":{"@type":"Organization","name":"Zean","sameAs":[],"image":"https://zean-image.oss-cn-hangzhou.aliyuncs.com/docs/basic/%E5%A4%B4%E5%83%8F.png","logo":{"@type":"ImageObject","url":"https://zean-image.oss-cn-hangzhou.aliyuncs.com/docs/basic/%E5%A4%B4%E5%83%8F.png"}},"url":"https://docs.zean-ai.cc/2025/08/19/%E8%BD%AF%E4%BB%B6%E9%83%A8%E7%BD%B2%E5%AE%89%E5%85%A8%E5%8A%A0%E5%9B%BA/","image":[]}</script>
   
 </head>
 <body>
@@ -69,7 +69,7 @@
 
 
 
-<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2025/08/26/Gramine/%E6%B5%8B%E8%AF%95%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%98%AF%E5%90%A6%E5%85%B7%E5%A4%87SGX%E7%8E%AF%E5%A2%83/"><span class="title">测试服务器是否具备SGX能力</span></a><a class="item title" href="/2025/08/26/%E6%B5%B7%E5%85%89CSV%E5%90%AF%E5%8A%A8%E6%95%99%E7%A8%8B/"><span class="title">海光CSV启动教程</span></a><a class="item title" href="/2025/08/26/SGX%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/"><span class="title">SGX基础笔记（1）：判断是否支持SGX</span></a><a class="item title" href="/2025/08/19/%E8%BD%AF%E4%BB%B6%E9%83%A8%E7%BD%B2%E5%AE%89%E5%85%A8%E5%8A%A0%E5%9B%BA/"><span class="title">基于已有海光硬件的安全部署方案</span></a><a class="item title" href="/2025/08/19/docker%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/"><span class="title">docker入门笔记</span></a></div></widget>
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2025/08/19/%E8%BD%AF%E4%BB%B6%E9%83%A8%E7%BD%B2%E5%AE%89%E5%85%A8%E5%8A%A0%E5%9B%BA/"><span class="title">基于已有海光硬件的安全部署方案</span></a><a class="item title" href="/2025/08/26/Gramine/%E6%B5%8B%E8%AF%95%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%98%AF%E5%90%A6%E5%85%B7%E5%A4%87SGX%E7%8E%AF%E5%A2%83/"><span class="title">测试服务器是否具备SGX能力</span></a><a class="item title" href="/2025/08/26/%E6%B5%B7%E5%85%89CSV%E5%90%AF%E5%8A%A8%E6%95%99%E7%A8%8B/"><span class="title">海光CSV启动教程</span></a><a class="item title" href="/2025/08/26/SGX%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/"><span class="title">SGX基础笔记（1）：判断是否支持SGX</span></a><a class="item title" href="/2025/08/19/docker%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/"><span class="title">docker入门笔记</span></a></div></widget>
 </div>
 
 </div></aside><div class="l_main" id="main">
@@ -82,7 +82,7 @@
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2025-08-19T08:45:30.518Z">2025-08-19</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-08-26T05:37:34.839Z">2025-08-26</time></span></div></div></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2025-08-19T08:45:30.518Z">2025-08-19</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-08-27T03:21:35.274Z">2025-08-27</time></span></div></div></div>
     
     <div class="bottom only-title">
       
@@ -94,7 +94,6 @@
     
   </div>
   </div><article class="md-text content"><h1 id=""><a href="#" class="headerlink" title=""></a></h1><h1 id="基于已有海光硬件的安全部署方案"><a href="#基于已有海光硬件的安全部署方案" class="headerlink" title="基于已有海光硬件的安全部署方案"></a>基于已有海光硬件的安全部署方案</h1><h3 id="项目背景"><a href="#项目背景" class="headerlink" title="项目背景"></a>项目背景</h3><p>客户购买指定海光型号的服务器，具备海光CSV的安全能力。运维同学需要将完整的符信产品部署至客户环境。客户环境可能联网，可能不联网，涉及到的安全能力需要区分此种区别。</p>
-<p>要求方案需要具备一定的安全威胁假设，核心目标为保护计算节点中橙色数据的安全。</p>
 <h3 id="安全威胁"><a href="#安全威胁" class="headerlink" title="安全威胁"></a>安全威胁</h3><ul>
 <li>交付时需要一并交付客户Root账户，故客户侧掌握服务器的全部运维权限。</li>
 <li>客户可能会采取任何行为尝试获取敏感数据，以往客户已经证明客户侧会试图将我们的数据进行转储并进一步利用。</li>
