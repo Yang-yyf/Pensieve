@@ -10,4 +10,3 @@ plugins/ai-coding-os/3_kernel/principles/[0-9]*
 plugins/ai-coding-os/3_kernel/decisions/[0-9]*
 plugins/ai-coding-os/3_kernel/heuristics/*
 !plugins/ai-coding-os/3_kernel/heuristics/.gitkeep
-plugins/ai-coding-os/growth-log.md
