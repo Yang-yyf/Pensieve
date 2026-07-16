@@ -4,7 +4,16 @@
 
 set -e
 
+# OS 源仓库优先（~/.claude/ai-coding-os.path 指向 Layer 1 本地仓库），
+# 避免读插件安装缓存里的过期副本；无 pointer 文件时回退到缓存
 PLUGIN_DIR="${CLAUDE_PLUGIN_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}"
+OS_PATH_FILE="$HOME/.claude/ai-coding-os.path"
+if [ -f "$OS_PATH_FILE" ]; then
+  os_root=$(head -1 "$OS_PATH_FILE")
+  if [ -n "$os_root" ] && [ -d "$os_root/plugins/ai-coding-os" ]; then
+    PLUGIN_DIR="$os_root/plugins/ai-coding-os"
+  fi
+fi
 KERNEL_DIR="$PLUGIN_DIR/3_kernel/principles"
 PATTERNS_DIR="$PLUGIN_DIR/2_memory/patterns"
 LOG="$PLUGIN_DIR/growth-log.md"
@@ -16,6 +25,10 @@ now_epoch=$(date +%s)
 date_to_epoch() {
   date -j -f "%Y-%m-%d" "$1" "+%s" 2>/dev/null || date -d "$1" "+%s" 2>/dev/null
 }
+
+# === 框架声明：告诉 Claude 这些内容的效力 ===
+echo "[AI Coding OS] 以下是用户在长期 AI 协作中沉淀的原则与模式。它们是本 session 的行为约束，不是参考资料。"
+echo "[AI Coding OS] 行动前对照原则执行；若用户指令与某条原则冲突，先向用户指出冲突再继续。"
 
 # === 加载 kernel/principles/ ===
 if [ -d "$KERNEL_DIR" ]; then

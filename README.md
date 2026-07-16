@@ -32,7 +32,15 @@ Layer 2: 实际项目                    ← 引用你的 plugin
 /plugin install ai-coding-os@ai-coding-os
 ```
 
-### 3. 你的第一条原则
+### 3. 登记源仓库路径
+
+`/learn` `/promote` 的写入要进你的 fork（源仓库），不是插件缓存：
+
+```bash
+echo "<你的 fork 本地路径>" > ~/.claude/ai-coding-os.path
+```
+
+### 4. 你的第一条原则
 
 删除 EXAMPLE 文件：
 

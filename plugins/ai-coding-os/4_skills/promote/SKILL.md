@@ -6,6 +6,12 @@ tags: [os, meta, promote]
 
 # /promote — 飞跃
 
+## OS 源仓库定位（写入前必做）
+
+读 `~/.claude/ai-coding-os.path` 第一行得到源仓库路径 `OS_ROOT`（不存在则询问用户并写入）。
+本技能中的路径均相对于 `OS_ROOT/plugins/ai-coding-os/`，git 操作在 `OS_ROOT` 中执行。
+禁止写插件安装缓存。
+
 ## 触发
 
 用户说 `/promote <memory-path>`。

@@ -15,7 +15,12 @@ tools:
 
 ## 审查清单
 
-在开始审查前，先读取 plugin 根目录下的 `3_kernel/principles/` 全部文件（跳过 EXAMPLE-），
+在开始审查前，先读取全部原则文件（跳过 EXAMPLE-）：
+
+1. 优先从 OS 源仓库读：`~/.claude/ai-coding-os.path` 第一行是 `OS_ROOT`，
+   原则在 `OS_ROOT/plugins/ai-coding-os/3_kernel/principles/`
+2. 该文件不存在时，回退到本 plugin 根目录下的 `3_kernel/principles/`
+
 将每条原则转换为审查检查项。
 
 ## 审查流程
