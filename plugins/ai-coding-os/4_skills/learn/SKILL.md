@@ -6,6 +6,15 @@ tags: [os, meta, learn]
 
 # /learn — 记录经验
 
+## OS 源仓库定位（写入前必做）
+
+所有写入和 git 操作都发生在 **OS 源仓库**，不是插件安装缓存（缓存里的改动不会进入成长曲线）：
+
+1. 读 `~/.claude/ai-coding-os.path` 第一行，得到源仓库绝对路径 `OS_ROOT`
+2. 若该文件不存在：询问用户其 Layer 1 仓库的本地路径，并写入该文件
+3. 本技能中的相对路径（如 `2_memory/feedback/`）均相对于 `OS_ROOT/plugins/ai-coding-os/`
+4. `git add` / `git commit` 在 `OS_ROOT` 中执行
+
 ## 触发
 
 用户说 `/learn` 或 `/learn <描述>`。
