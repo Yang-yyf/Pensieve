@@ -1,0 +1,10 @@
+{
+  "name": "ai-coding-os",
+  "description": "AI Coding OS — 把实践经验提炼为可迁移的理性认识",
+  "version": "0.1.0",
+  "author": {
+    "name": "杨逸飞"
+  },
+  "license": "MIT",
+  "keywords": ["ai-coding", "methodology", "knowledge-management"]
+}
