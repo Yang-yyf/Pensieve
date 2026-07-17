@@ -20,9 +20,9 @@ tags: [os, meta, retrospect]
 
 ## --daily
 
-1. 询问："今天学到了什么？（一句话即可）"
-2. 在 `growth-log.md` 日度笔记表格追加一行
-3. 更新 frontmatter 的 `last_daily` 时间戳
+1. 询问:"今天学到了什么?(一句话即可)"
+2. 在 `growth-log.md` 的"日度笔记"表格(`| 日期 | 笔记 |`)追加一行,日期为今天,笔记为用户回答
+3. 把 frontmatter 的 `last_daily: YYYY-MM-DD` 改为今天
 
 ## --monthly
 
@@ -36,5 +36,5 @@ tags: [os, meta, retrospect]
 5. 列出可能重复或矛盾的条目 → 建议合并
 6. 列出 `3_kernel/heuristics/` → 升级/保持/废弃
 7. 用户逐条确认后执行
-8. 更新 `growth-log.md` 月度审查表格 + `last_monthly` 时间戳
+8. 在 `growth-log.md` 的"月度审查"表格(`| 日期 | 清理 | 升级 | 废弃 |`)追加一行,日期为今天,清理/升级/废弃填本次相应数量;并把 frontmatter 的 `last_monthly: YYYY-MM-DD` 改为今天
 9. `git commit -m "retrospect: YYYY-MM-DD (monthly)"`

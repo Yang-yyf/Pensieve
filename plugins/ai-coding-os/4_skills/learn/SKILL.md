@@ -35,7 +35,7 @@ tags: [os, meta, learn]
 
 ## 文件格式
 
-````markdown
+```markdown
 ---
 name: <kebab-case-slug>
 description: <一句话描述>
@@ -52,5 +52,5 @@ metadata:
 **正确**: ...
 **后果**: ...
 
-**[[引用]]**: [如果有相关 memory 或 kernel，在此列出]
-````
+**参见**: <相关 memory 或 kernel,用自然语言描述关联,如"参见 002-verify-before-batch 的批量对齐规则"。不要用 [[xxx]] 这种 wiki 语法,Claude 无法解析>
+```
