@@ -24,14 +24,17 @@ tags: [os, meta, retrospect]
 
 ## --monthly
 
-1. 列出所有 `3_kernel/principles/` 文件,按 last-modified 排序
+1. 列出所有 `3_kernel/principles/` 文件,按 last-modified 排序(`ls -lt 3_kernel/principles/*.md`)
 2. 逐条询问用户该原则是否近期被触发(人工判断)
 3. 标注超过 3 个月未触发的原则 → 建议评估
 4. 列出 promote 候选,扫描两个来源:
    - Layer 1 `2_memory/feedback/`(跨项目)
    - 当前项目 `${CLAUDE_PROJECT_DIR}/.claude/memory/feedback/`(项目级)
    - 跳过已标记 `promoted: true` 的条目
-5. 列出可能重复或矛盾的条目 → 建议合并
+5. **检测重复或矛盾**:对每对 memory 文件,自问:
+   - 重复:"这两条描述的是不是同一个根本模式?"(场景不同但教训相同)
+   - 矛盾:"这两条在同一情境下是否给出相反指示?"
+   - 列出嫌疑对,建议合并或择优保留
 6. 列出 `3_kernel/heuristics/` → 升级/保持/废弃
 7. 用户逐条确认后执行
 8. 在 `growth-log.md` 的"月度审查"表格(`| 日期 | 清理 | 升级 | 废弃 |`)追加一行,日期为今天,清理/升级/废弃填本次相应数量;并把 frontmatter 的 `last_monthly: YYYY-MM-DD` 改为今天
