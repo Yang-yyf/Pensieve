@@ -53,11 +53,11 @@ tags: [pensieve, meta, init]
 
 ### 当前配置
 
-- **Layer 1 源仓库**: `<填入 OS_ROOT>` — 原则与 memory 实际存这里,通过 `~/.claude/pensieve.path` 定位
+- **Layer 1 源仓库**: `<填入 PENSIEVE_ROOT>` — 原则与 memory 实际存这里,通过 `~/.claude/pensieve.path` 定位
 - **项目级 kernel (Layer 1.5)**: <未启用 | 已启用 → `<填入路径>`> — 项目专属架构决策,marker 在 `.claude/pensieve-project.path`
 - **审查提醒节奏**: daily: on / weekly: off / monthly: on
   - 关 daily:运行 `/pensieve:retrospect --daily` 记一笔后当天不再提醒
-  - 关 monthly:把 `<OS_ROOT>/plugins/pensieve/growth-log.md` 的 `last_monthly` 改成今天
+  - 关 monthly:把 `<PENSIEVE_ROOT>/plugins/pensieve/growth-log.md` 的 `last_monthly` 改成今天
 - **原则触发模式**:宽松(Claude 提示冲突后让用户决定);想改严格(主动拦截),把本行改为"严格"
 
 ### Sub-Agent Context Block
