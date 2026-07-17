@@ -1,6 +1,6 @@
 ---
 name: learn
-description: 从 raw 材料中提取可复用经验，写入 memory/feedback/ 或 memory/patterns/
+description: 记录一次踩坑/经验/教训,或从对话中提炼可复用模式。用户说 /learn、或"记录一下""踩坑""教训""经验""刚才那个错"时触发
 tags: [os, meta, learn]
 ---
 
@@ -27,11 +27,17 @@ tags: [os, meta, learn]
    - **跨项目**（方法论、协作原则、通用陷阱，换项目也成立）→ `OS_ROOT/plugins/ai-coding-os/2_memory/feedback/<slug>.md`
    - **项目特定**（某项目的端口、API 坑、配置 idiosyncrasy，换项目就无意义）→ `${CLAUDE_PROJECT_DIR}/.claude/memory/feedback/<slug>.md`
    - 判断不准时问用户："这条经验是通用的，还是只在这个项目成立？"
-5. **判断类型**：
-   - 一次性的教训 → `feedback/`
-   - 可复用的模式草稿 → `patterns/`
+5. **判断类型**(参见下方"feedback vs pattern"定义):
+   - feedback → `feedback/`
+   - pattern → `patterns/`
 6. 检查目标目录是否已有类似条目，有则合并到已有文件
-7. 写文件。跨项目 → 在 `OS_ROOT` 中 `git add` + `git commit`;项目特定 → 项目本身的 git 流程（不一定 commit，看项目约定）
+7. 写文件。跨项目 → 在 `OS_ROOT` 中 `git add` + `git commit`;项目特定 → 项目本身的 git 流程(不一定 commit,看项目约定)
+
+## feedback vs pattern 定义
+
+- **feedback**(教训):一次具体错误/correction 的记录。结构是"场景-错误-正确-后果"。例:"调价公式方向反了,把 actual+profit 当字面算"
+- **pattern**(模式):跨多个具体事件观察到的结构性规律。结构是"在 X 情境下,Y 结构倾向于发生"。例:"CSV 带正负号字段 + 业务动词,字面公式常误导"
+- 区别:feedback 是"出过的事",pattern 是"为什么会出过"。一次踩坑通常先记 feedback,后续观察到反复出现再抽象为 pattern
 
 ## 文件格式
 

@@ -1,16 +1,20 @@
 ---
 name: promote
-description: 将已验证的 memory 飞跃为 kernel 原则或试探规则
+description: 把已积累的 memory 升级为 kernel 原则或试探规则。用户说 /promote 或"升级为原则""通用化""这条经验可迁移"时触发
 tags: [os, meta, promote]
 ---
 
 # /promote — 飞跃
 
-## OS 源仓库定位（写入前必做）
+## OS 源仓库定位
 
-读 `~/.claude/ai-coding-os.path` 第一行得到源仓库路径 `OS_ROOT`（不存在则询问用户并写入）。
-本技能中的路径均相对于 `OS_ROOT/plugins/ai-coding-os/`，git 操作在 `OS_ROOT` 中执行。
-禁止写插件安装缓存。
+读 `~/.claude/ai-coding-os.path` 第一行得到 `OS_ROOT`(不存在则询问用户并写入)。相对路径相对于 `OS_ROOT/plugins/ai-coding-os/`,git 操作在 `OS_ROOT` 中执行。绝不写插件安装缓存。
+
+## principles vs heuristics 定义
+
+- **principle**(原则):跨所有项目成立的硬约束。违反会造成真实损害。例:"写操作必须用户显式授权"。每次只能少几条,值得占 SessionStart token
+- **heuristic**(试探规则):经验法则,通常对但有例外。例:"优先 Alpine 而非 Ubuntu 基础镜像"。可多可少,作参考
+- 区别:principle 是"必须",heuristic 是"建议"。不确定时先放 heuristics,等再积累证据再升级 principle
 
 ## 触发
 
@@ -47,7 +51,7 @@ tags: [os, meta, promote]
        promoted_to: 3_kernel/principles/<NNN>-<slug>.md
      ```
    - 若原 memory 文件没有 frontmatter,先补一个再回填
-8. 在 OS_ROOT 中 `git add` + `git commit -m "promote: <memory> → principle #N"`
+8. 在 OS_ROOT 中 `git add` + `git commit -m "promote: <memory> → principle <NNN>-<slug>"`(NNN 与文件名一致,如 "→ principle 005-avoid-night-batch")
    (若源在项目级,项目仓库自己也应 commit 一次标记变更)
 
 ## 原则文件模板
