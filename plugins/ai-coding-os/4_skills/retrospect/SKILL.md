@@ -1,16 +1,14 @@
 ---
 name: retrospect
-description: 定期审查 kernel + memory，清理、合并、废弃过时条目
+description: 定期审查 kernel 与 memory,清理重复/过时,合并矛盾条目。用户说 /retrospect 或"审查""清理""回顾""月度总结"时触发
 tags: [os, meta, retrospect]
 ---
 
 # /retrospect — 审查
 
-## OS 源仓库定位（执行前必做）
+## OS 源仓库定位
 
-读 `~/.claude/ai-coding-os.path` 第一行得到源仓库路径 `OS_ROOT`（不存在则询问用户并写入）。
-本技能中的路径（`3_kernel/`、`2_memory/`、`growth-log.md`）均相对于
-`OS_ROOT/plugins/ai-coding-os/`，git 操作在 `OS_ROOT` 中执行。禁止写插件安装缓存。
+读 `~/.claude/ai-coding-os.path` 第一行得到 `OS_ROOT`(不存在则询问用户并写入)。路径(`3_kernel/`、`2_memory/`、`growth-log.md`)相对于 `OS_ROOT/plugins/ai-coding-os/`,git 操作在 `OS_ROOT` 中执行。绝不写插件安装缓存。
 
 ## 触发
 
