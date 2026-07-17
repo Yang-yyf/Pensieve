@@ -34,6 +34,7 @@ tags: [os, meta, promote]
    - 用户明确要求 bypass → 继续(bootstrapping 模式)
 3. 提取可迁移命题:
    - 去掉所有具体项目名、时间、技术栈
+   - 去掉项目风味用词(如"线上""博库""店铺"换成更通用的"生产""对外""系统")
    - 保留可迁移的判断结构
    - 每条原则正文 < 200 字
 4. 判断目标位置:
@@ -63,7 +64,7 @@ description: <一句话描述,便于检索>
 metadata:
   type: principle
   status: active
-  since: YYYY-MM-DD
+  since: YYYY-MM-DD   # promote 当天日期(原则进入 kernel 的生日),不是事故首现日期
   promoted_from: <原 memory 路径>
 ---
 
