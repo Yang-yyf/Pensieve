@@ -37,8 +37,8 @@ date_to_epoch() {
 }
 
 # === 框架声明：告诉 Claude 这些内容的效力 ===
-echo "[AI Coding OS] 以下是用户在长期 AI 协作中沉淀的原则与模式。它们是本 session 的行为约束，不是参考资料。"
-echo "[AI Coding OS] 行动前对照原则执行；若用户指令与某条原则冲突，先向用户指出冲突再继续。"
+echo "[AI Coding OS] 以下是用户在长期 AI 协作中沉淀的原则。本 session 行动时参照执行。"
+echo "[AI Coding OS] 若用户指令可能与某条原则冲突,执行前一句话提示用户并等确认;用户明确坚持时以用户指令为准。"
 
 # === 加载 kernel/principles/ ===
 if [ -d "$KERNEL_DIR" ]; then
