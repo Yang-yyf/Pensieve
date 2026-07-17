@@ -26,12 +26,12 @@ tags: [os, meta, promote]
    - Layer 1 跨项目:`2_memory/feedback/xxx.md`(相对于 `OS_ROOT/plugins/ai-coding-os/`)
    - 项目级:`.claude/memory/feedback/xxx.md`(相对于 `CLAUDE_PROJECT_DIR`)
 2. **判断该 memory 是否在 2 个以上场景/项目出现过**(关键门槛):
-   - 方法:扫描两个目录的所有 .md 文件,找语义相似的条目(主题相同、错误模式相同、教训结构可对应)
+   - 方法:遍历两个目录的每个 .md 文件:
      - `OS_ROOT/plugins/ai-coding-os/2_memory/feedback/`
      - `${CLAUDE_PROJECT_DIR}/.claude/memory/feedback/`
-   - 找到 2+ 次相似(含当前条目) → 继续
-   - 找不到 → 拒绝,告知用户"目前只观察到 1 次出现,建议积累更多验证后再升级"
-   - 用户明确要求 bypass → 继续(bootstrapping 模式)
+   - 对每个文件,读 标题 + 错误/正确 段,自问:"这条描述的根本模式(不是表面场景)是否和正在 promote 的 memory 相同?"
+   - 计数相似条目(含当前条目)
+   - 2+ 次 → 继续;1 次 → 拒绝,告知"目前只观察到 1 次出现,建议积累更多验证后再升级";用户明确 bypass → 继续
 3. 提取可迁移命题:
    - 去掉所有具体项目名、时间、技术栈
    - 去掉项目风味用词(如"线上""博库""店铺"换成更通用的"生产""对外""系统")

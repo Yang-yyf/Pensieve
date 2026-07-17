@@ -49,6 +49,7 @@ tags: [os, meta, learn]
 name: <kebab-case-slug>
 description: <一句话描述>
 metadata:
+  node_type: memory
   type: feedback | pattern
   date: YYYY-MM-DD
   promoted: false
