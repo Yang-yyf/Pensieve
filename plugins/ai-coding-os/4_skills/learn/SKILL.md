@@ -28,11 +28,15 @@ tags: [os, meta, learn]
    - **错误**: 发生了什么问题（或 AI 做了什么不对的事）
    - **正确**: 应该怎么做
    - **后果**: 不这样做会怎样
-4. 判断类型：
-   - 一次性的教训 → `2_memory/feedback/<slug>.md`
-   - 可复用的模式草稿 → `2_memory/patterns/<slug>.md`
-5. 检查 memory/ 是否已有类似条目，有则合并到已有文件
-6. 写文件，执行 `git add` + `git commit -m "learn: <summary>"`
+4. **判断目标层级**（关键）：
+   - **跨项目**（方法论、协作原则、通用陷阱，换项目也成立）→ `OS_ROOT/plugins/ai-coding-os/2_memory/feedback/<slug>.md`
+   - **项目特定**（某项目的端口、API 坑、配置 idiosyncrasy，换项目就无意义）→ `${CLAUDE_PROJECT_DIR}/.claude/memory/feedback/<slug>.md`
+   - 判断不准时问用户："这条经验是通用的，还是只在这个项目成立？"
+5. **判断类型**：
+   - 一次性的教训 → `feedback/`
+   - 可复用的模式草稿 → `patterns/`
+6. 检查目标目录是否已有类似条目，有则合并到已有文件
+7. 写文件。跨项目 → 在 `OS_ROOT` 中 `git add` + `git commit`;项目特定 → 项目本身的 git 流程（不一定 commit，看项目约定）
 
 ## 文件格式
 

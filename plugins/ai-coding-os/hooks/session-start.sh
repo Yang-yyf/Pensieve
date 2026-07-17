@@ -21,6 +21,16 @@ LOG="$PLUGIN_DIR/growth-log.md"
 today=$(date +%Y-%m-%d)
 now_epoch=$(date +%s)
 
+# 输出 markdown 文件内容,跳过开头 frontmatter(两个 --- 之间的 YAML),节省 token
+strip_frontmatter() {
+  awk '
+    BEGIN { in_fm = 0 }
+    NR==1 && /^---[[:space:]]*$/ { in_fm = 1; next }
+    in_fm && /^---[[:space:]]*$/ { in_fm = 0; next }
+    !in_fm { print }
+  ' "$1"
+}
+
 # 日期转 epoch（macOS 兼容）
 date_to_epoch() {
   date -j -f "%Y-%m-%d" "$1" "+%s" 2>/dev/null || date -d "$1" "+%s" 2>/dev/null
@@ -37,7 +47,7 @@ if [ -d "$KERNEL_DIR" ]; then
     case "$(basename "$f")" in EXAMPLE-*) continue ;; esac
     echo ""
     echo "--- OS kernel: $(basename "$f") ---"
-    cat "$f"
+    strip_frontmatter "$f"
   done
 fi
 
@@ -47,7 +57,7 @@ if [ -d "$PATTERNS_DIR" ]; then
     [ -f "$f" ] || continue
     echo ""
     echo "--- OS pattern: $(basename "$f") ---"
-    cat "$f"
+    strip_frontmatter "$f"
   done
 fi
 
@@ -65,7 +75,7 @@ while [ -n "$proj_dir" ] && [ "$proj_dir" != "/" ]; do
         [ -f "$f" ] || continue
         case "$(basename "$f")" in EXAMPLE-*) continue ;; esac
         echo ""
-        cat "$f"
+        strip_frontmatter "$f"
       done
     fi
     break
