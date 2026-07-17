@@ -1,10 +1,10 @@
 ---
 name: learn
-description: 记录一次踩坑/经验/教训,或从对话中提炼可复用模式。用户说 /learn、或"记录一下""踩坑""教训""经验""刚才那个错"时触发
+description: 记录一次踩坑/经验/教训,或从对话中提炼可复用模式。用户说 /pensieve:learn、或"记录一下""踩坑""教训""经验""刚才那个错"时触发
 tags: [os, meta, learn]
 ---
 
-# /learn — 记录经验
+# /pensieve:learn — 记录经验
 
 ## Pensieve 源仓库定位
 
@@ -12,7 +12,7 @@ tags: [os, meta, learn]
 
 ## 触发
 
-用户说 `/learn` 或 `/learn <描述>`。
+用户说 `/pensieve:learn` 或 `/pensieve:learn <描述>`。
 
 ## 执行逻辑
 

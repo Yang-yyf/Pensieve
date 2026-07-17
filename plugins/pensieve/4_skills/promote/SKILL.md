@@ -1,10 +1,10 @@
 ---
 name: promote
-description: 把已积累的 memory 升级为 kernel 原则或试探规则。用户说 /promote 或"升级为原则""通用化""这条经验可迁移"时触发
+description: 把已积累的 memory 升级为 kernel 原则或试探规则。用户说 /pensieve:promote 或"升级为原则""通用化""这条经验可迁移"时触发
 tags: [os, meta, promote]
 ---
 
-# /promote — 飞跃
+# /pensieve:promote — 飞跃
 
 ## Pensieve 源仓库定位
 
@@ -18,7 +18,7 @@ tags: [os, meta, promote]
 
 ## 触发
 
-用户说 `/promote <memory-path>`。
+用户说 `/pensieve:promote <memory-path>`。
 
 ## 执行逻辑
 
@@ -42,7 +42,7 @@ tags: [os, meta, promote]
    - 还未完全确信 → `3_kernel/heuristics/<slug>.md`
 5. 进入 principles 时分配编号:扫描 `3_kernel/principles/[0-9]*-*.md` 找最大编号 N,新原则用 N+1(三位补零,如 `005-xxx.md`)
 6. 写 kernel 文件(在 PENSIEVE_ROOT 中),按下方模板。**填 参见 字段前**:扫所有已有原则的标题和 规则 段,自问"新原则和哪条共享触发条件或后果?",列相关原则。无相关则填"无",不要硬凑
-7. **回填原 memory 文件的 promoted 标记**(关键,/retrospect 据此跳过):
+7. **回填原 memory 文件的 promoted 标记**(关键,/pensieve:retrospect 据此跳过):
    - 位置:**frontmatter metadata 块内**(文件开头两个 `---` 之间),不是正文
    - 添加两个字段:
      ```

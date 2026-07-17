@@ -110,7 +110,7 @@ if [ -f "$LOG" ]; then
   # 日度
   if [ "$last_daily" != "$today" ] && [ -n "$last_daily" ]; then
     echo ""
-    echo "[Pensieve] 今日日度笔记未记录。今天学到什么了吗？用 /retrospect --daily 记一笔。"
+    echo "[Pensieve] 今日日度笔记未记录。今天学到什么了吗？用 /pensieve:retrospect --daily 记一笔。"
   fi
 
   # 周度
@@ -119,7 +119,7 @@ if [ -f "$LOG" ]; then
     if [ -n "$weekly_epoch" ]; then
       days_diff=$(( (now_epoch - weekly_epoch) / 86400 ))
       if [ "$days_diff" -gt 7 ]; then
-        echo "[Pensieve] 距上次周度回顾已 ${days_diff} 天，建议 /retrospect --weekly（v0.2）"
+        echo "[Pensieve] 距上次周度回顾已 ${days_diff} 天，建议 /pensieve:retrospect --weekly（v0.2）"
       fi
     fi
   fi
@@ -130,7 +130,7 @@ if [ -f "$LOG" ]; then
     if [ -n "$monthly_epoch" ]; then
       days_diff=$(( (now_epoch - monthly_epoch) / 86400 ))
       if [ "$days_diff" -gt 30 ]; then
-        echo "[Pensieve] 距上次月度审查已 ${days_diff} 天，建议 /retrospect --monthly"
+        echo "[Pensieve] 距上次月度审查已 ${days_diff} 天，建议 /pensieve:retrospect --monthly"
       fi
     fi
   fi
