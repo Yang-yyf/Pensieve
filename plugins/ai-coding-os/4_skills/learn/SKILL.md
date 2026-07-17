@@ -33,7 +33,7 @@ tags: [os, meta, learn]
 5. **判断类型**(参见下方"feedback vs pattern"定义):
    - feedback → `feedback/`
    - pattern → `patterns/`
-6. 检查目标目录是否已有类似条目，有则合并到已有文件
+6. 检查目标目录是否已有类似条目:遍历现有 .md 文件,自问"这条描述的根本模式是否和新经验相同?"。相似 → 把新内容 merge 到已有文件(更新 错误/正确 段或追加新场景),不要建重复文件
 7. 写文件。跨项目 → 在 `OS_ROOT` 中 `git add` + `git commit`;项目特定 → 项目本身的 git 流程(不一定 commit,看项目约定)
 
 ## feedback vs pattern 定义
