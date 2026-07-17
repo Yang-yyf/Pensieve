@@ -1,17 +1,17 @@
 #!/bin/sh
-# AI Coding OS — SessionStart Hook
+# Pensieve — SessionStart Hook
 # SessionStart stdout 自动注入 Claude 上下文，直接 echo/cat 即可
 
 set -e
 
-# OS 源仓库优先（~/.claude/ai-coding-os.path 指向 Layer 1 本地仓库），
+# OS 源仓库优先（~/.claude/pensieve.path 指向 Layer 1 本地仓库），
 # 避免读插件安装缓存里的过期副本；无 pointer 文件时回退到缓存
 PLUGIN_DIR="${CLAUDE_PLUGIN_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}"
-OS_PATH_FILE="$HOME/.claude/ai-coding-os.path"
-if [ -f "$OS_PATH_FILE" ]; then
-  os_root=$(head -1 "$OS_PATH_FILE")
-  if [ -n "$os_root" ] && [ -d "$os_root/plugins/ai-coding-os" ]; then
-    PLUGIN_DIR="$os_root/plugins/ai-coding-os"
+PENSIEVE_PATH_FILE="$HOME/.claude/pensieve.path"
+if [ -f "$PENSIEVE_PATH_FILE" ]; then
+  pensieve_root=$(head -1 "$PENSIEVE_PATH_FILE")
+  if [ -n "$pensieve_root" ] && [ -d "$pensieve_root/plugins/pensieve" ]; then
+    PLUGIN_DIR="$pensieve_root/plugins/pensieve"
   fi
 fi
 KERNEL_DIR="$PLUGIN_DIR/3_kernel/principles"
@@ -37,8 +37,8 @@ date_to_epoch() {
 }
 
 # === 框架声明：告诉 Claude 这些内容的效力 ===
-echo "[AI Coding OS] 以下是用户在长期 AI 协作中沉淀的原则。本 session 行动时参照执行。"
-echo "[AI Coding OS] 若用户指令可能与某条原则冲突,执行前一句话提示用户并等确认;用户明确坚持时以用户指令为准。"
+echo "[Pensieve] 以下是用户在长期 AI 协作中沉淀的原则。本 session 行动时参照执行。"
+echo "[Pensieve] 若用户指令可能与某条原则冲突,执行前一句话提示用户并等确认;用户明确坚持时以用户指令为准。"
 
 # === 加载 kernel/principles/ ===
 if [ -d "$KERNEL_DIR" ]; then
@@ -46,7 +46,7 @@ if [ -d "$KERNEL_DIR" ]; then
     [ -f "$f" ] || continue
     case "$(basename "$f")" in EXAMPLE-*) continue ;; esac
     echo ""
-    echo "--- OS kernel: $(basename "$f") ---"
+    echo "--- Pensieve kernel: $(basename "$f") ---"
     strip_frontmatter "$f"
   done
 fi
@@ -56,16 +56,16 @@ if [ -d "$PATTERNS_DIR" ]; then
   for f in "$PATTERNS_DIR"/*.md; do
     [ -f "$f" ] || continue
     echo ""
-    echo "--- OS pattern: $(basename "$f") ---"
+    echo "--- Pensieve pattern: $(basename "$f") ---"
     strip_frontmatter "$f"
   done
 fi
 
 # === 加载项目级 kernel（Layer 1.5）===
-# 从 CLAUDE_PROJECT_DIR 向上递归找 .claude/os-project.path，加载其指向的 kernel 目录
+# 从 CLAUDE_PROJECT_DIR 向上递归找 .claude/pensieve-project.path，加载其指向的 kernel 目录
 proj_dir="${CLAUDE_PROJECT_DIR:-$(pwd)}"
 while [ -n "$proj_dir" ] && [ "$proj_dir" != "/" ]; do
-  marker="$proj_dir/.claude/os-project.path"
+  marker="$proj_dir/.claude/pensieve-project.path"
   if [ -f "$marker" ]; then
     project_kernel=$(head -1 "$marker")
     if [ -n "$project_kernel" ] && [ -d "$project_kernel" ]; then
@@ -110,7 +110,7 @@ if [ -f "$LOG" ]; then
   # 日度
   if [ "$last_daily" != "$today" ] && [ -n "$last_daily" ]; then
     echo ""
-    echo "[OS] 今日日度笔记未记录。今天学到什么了吗？用 /retrospect --daily 记一笔。"
+    echo "[Pensieve] 今日日度笔记未记录。今天学到什么了吗？用 /retrospect --daily 记一笔。"
   fi
 
   # 周度
@@ -119,7 +119,7 @@ if [ -f "$LOG" ]; then
     if [ -n "$weekly_epoch" ]; then
       days_diff=$(( (now_epoch - weekly_epoch) / 86400 ))
       if [ "$days_diff" -gt 7 ]; then
-        echo "[OS] 距上次周度回顾已 ${days_diff} 天，建议 /retrospect --weekly（v0.2）"
+        echo "[Pensieve] 距上次周度回顾已 ${days_diff} 天，建议 /retrospect --weekly（v0.2）"
       fi
     fi
   fi
@@ -130,7 +130,7 @@ if [ -f "$LOG" ]; then
     if [ -n "$monthly_epoch" ]; then
       days_diff=$(( (now_epoch - monthly_epoch) / 86400 ))
       if [ "$days_diff" -gt 30 ]; then
-        echo "[OS] 距上次月度审查已 ${days_diff} 天，建议 /retrospect --monthly"
+        echo "[Pensieve] 距上次月度审查已 ${days_diff} 天，建议 /retrospect --monthly"
       fi
     fi
   fi

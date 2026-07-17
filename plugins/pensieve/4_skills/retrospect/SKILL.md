@@ -6,9 +6,9 @@ tags: [os, meta, retrospect]
 
 # /retrospect — 审查
 
-## OS 源仓库定位
+## Pensieve 源仓库定位
 
-读 `~/.claude/ai-coding-os.path` 第一行得到 `OS_ROOT`(不存在则询问用户并写入)。路径(`3_kernel/`、`2_memory/`、`growth-log.md`)相对于 `OS_ROOT/plugins/ai-coding-os/`,git 操作在 `OS_ROOT` 中执行。绝不写插件安装缓存。
+读 `~/.claude/pensieve.path` 第一行得到 `PENSIEVE_ROOT`(不存在则询问用户并写入)。路径(`3_kernel/`、`2_memory/`、`growth-log.md`)相对于 `PENSIEVE_ROOT/plugins/pensieve/`,git 操作在 `PENSIEVE_ROOT` 中执行。绝不写插件安装缓存。
 
 ## 触发
 

@@ -6,9 +6,9 @@ tags: [os, meta, learn]
 
 # /learn — 记录经验
 
-## OS 源仓库定位
+## Pensieve 源仓库定位
 
-读 `~/.claude/ai-coding-os.path` 第一行得到 `OS_ROOT`(不存在则询问用户并写入)。相对路径相对于 `OS_ROOT/plugins/ai-coding-os/`,git 操作在 `OS_ROOT` 中执行。绝不写插件安装缓存——那里改了不进成长曲线。
+读 `~/.claude/pensieve.path` 第一行得到 `PENSIEVE_ROOT`(不存在则询问用户并写入)。相对路径相对于 `PENSIEVE_ROOT/plugins/pensieve/`,git 操作在 `PENSIEVE_ROOT` 中执行。绝不写插件安装缓存——那里改了不进成长曲线。
 
 ## 触发
 
@@ -27,14 +27,14 @@ tags: [os, meta, learn]
    - **正确**: 应该怎么做
    - **后果**: 不这样做会怎样
 4. **判断目标层级**（关键）：
-   - **跨项目**（方法论、协作原则、通用陷阱，换项目也成立）→ `OS_ROOT/plugins/ai-coding-os/2_memory/feedback/<slug>.md`
+   - **跨项目**（方法论、协作原则、通用陷阱，换项目也成立）→ `PENSIEVE_ROOT/plugins/pensieve/2_memory/feedback/<slug>.md`
    - **项目特定**（某项目的端口、API 坑、配置 idiosyncrasy，换项目就无意义）→ `${CLAUDE_PROJECT_DIR}/.claude/memory/feedback/<slug>.md`
    - 判断不准时问用户："这条经验是通用的，还是只在这个项目成立？"
 5. **判断类型**(参见下方"feedback vs pattern"定义):
    - feedback → `feedback/`
    - pattern → `patterns/`
 6. 检查目标目录是否已有类似条目:遍历现有 .md 文件,自问"这条描述的根本模式是否和新经验相同?"。相似 → 把新内容 merge 到已有文件(更新 错误/正确 段或追加新场景),不要建重复文件
-7. 写文件。跨项目 → 在 `OS_ROOT` 中 `git add` + `git commit`;项目特定 → 项目本身的 git 流程(不一定 commit,看项目约定)
+7. 写文件。跨项目 → 在 `PENSIEVE_ROOT` 中 `git add` + `git commit`;项目特定 → 项目本身的 git 流程(不一定 commit,看项目约定)
 
 ## feedback vs pattern 定义
 
