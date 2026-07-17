@@ -1,6 +1,6 @@
-# AI Coding OS
+# Pensieve
 
-**AI Coding OS** 是一个 Claude Code plugin，帮你把跟 AI 协作中的经验、原则、决策
+**Pensieve** 是一个 Claude Code plugin，帮你把跟 AI 协作中的经验、原则、决策
 从"脑子里"搬到"git 仓库里"。
 
 ## 核心理念
@@ -18,7 +18,7 @@ Layer 1.5: 项目级 plugin(可选)           ← 单个项目的架构决策/�
 Layer 2:   实际项目                      ← 各自的 .claude/memory/ raw
 ```
 
-详见 `zean/docs/2026-07-16-ai-coding-os-design.md` §11-12。
+详见 `zean/docs/2026-07-16-pensieve-design.md` §11-12。
 
 ## 快速开始
 
@@ -29,11 +29,11 @@ Layer 2:   实际项目                      ← 各自的 .claude/memory/ raw
 支持 GitHub URL 或本地路径:
 
 ```
-/plugin marketplace add https://github.com/<你的用户名>/ai-coding-os
+/plugin marketplace add https://github.com/<你的用户名>/pensieve
 # 或本地路径:
-/plugin marketplace add /path/to/your/ai-coding-os-fork
+/plugin marketplace add /path/to/your/pensieve-fork
 
-/plugin install ai-coding-os@ai-coding-os
+/plugin install pensieve@pensieve
 ```
 
 ### 3. 登记源仓库路径
@@ -41,7 +41,7 @@ Layer 2:   实际项目                      ← 各自的 .claude/memory/ raw
 `/learn` `/promote` 的写入要进你的 fork(源仓库),不是插件缓存:
 
 ```bash
-echo "<你的 fork 本地路径>" > ~/.claude/ai-coding-os.path
+echo "<你的 fork 本地路径>" > ~/.claude/pensieve.path
 ```
 
 ### 4. (可选)项目级 kernel
@@ -50,7 +50,7 @@ echo "<你的 fork 本地路径>" > ~/.claude/ai-coding-os.path
 
 ```bash
 mkdir -p <项目根>/.claude
-echo "<项目级 kernel 目录绝对路径>" > <项目根>/.claude/os-project.path
+echo "<项目级 kernel 目录绝对路径>" > <项目根>/.claude/pensieve-project.path
 ```
 
 SessionStart 会自动扫描此 marker 文件。
@@ -61,8 +61,8 @@ SessionStart 会自动扫描此 marker 文件。
 
 ```bash
 cd <你的 fork 路径>
-rm plugins/ai-coding-os/3_kernel/principles/EXAMPLE-principle.md
-rm plugins/ai-coding-os/3_kernel/decisions/EXAMPLE-decision.md
+rm plugins/pensieve/3_kernel/principles/EXAMPLE-principle.md
+rm plugins/pensieve/3_kernel/decisions/EXAMPLE-decision.md
 ```
 
 用 `/learn` 记录你的第一条经验,然后用 `/promote` 把它升级为原则。
@@ -70,7 +70,7 @@ rm plugins/ai-coding-os/3_kernel/decisions/EXAMPLE-decision.md
 ## 目录结构
 
 ```
-plugins/ai-coding-os/
+plugins/pensieve/
 ├── hooks/               ← SessionStart(注入原则 + 项目 pointer 扫描)
 ├── 2_memory/            ← 你的经验
 ├── 3_kernel/            ← 提炼后的原则
