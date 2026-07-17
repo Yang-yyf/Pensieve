@@ -33,7 +33,16 @@ tags: [os, meta, promote]
    - 还未完全确信 → `3_kernel/heuristics/<slug>.md`
 5. 如果进入 principles:分配下一个编号,建立对其他 kernel 文件的 `[[引用]]`
 6. 写 kernel 文件(在 OS_ROOT 中)
-7. **在原 memory 文件中标记 `promoted: true` + `promoted_to: 3_kernel/principles/<NNN>-<slug>.md`** —— 不管源在 Layer 1 还是项目级,都要回填
+7. **回填原 memory 文件的 promoted 标记**(关键,/retrospect 据此跳过):
+   - 位置:**frontmatter metadata 块内**(文件开头两个 `---` 之间),不是正文
+   - 添加两个字段:
+     ```
+     metadata:
+       ...(已有字段)
+       promoted: true
+       promoted_to: 3_kernel/principles/<NNN>-<slug>.md
+     ```
+   - 若原 memory 文件没有 frontmatter,先补一个再回填
 8. 在 OS_ROOT 中 `git add` + `git commit -m "promote: <memory> → principle #N"`
    (若源在项目级,项目仓库自己也应 commit 一次标记变更)
 
