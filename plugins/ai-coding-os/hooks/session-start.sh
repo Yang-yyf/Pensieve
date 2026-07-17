@@ -51,7 +51,29 @@ if [ -d "$PATTERNS_DIR" ]; then
   done
 fi
 
-# === 加载项目 memory（最近 5 条 feedback）===
+# === 加载项目级 kernel（Layer 1.5）===
+# 从 CLAUDE_PROJECT_DIR 向上递归找 .claude/os-project.path，加载其指向的 kernel 目录
+proj_dir="${CLAUDE_PROJECT_DIR:-$(pwd)}"
+while [ -n "$proj_dir" ] && [ "$proj_dir" != "/" ]; do
+  marker="$proj_dir/.claude/os-project.path"
+  if [ -f "$marker" ]; then
+    project_kernel=$(head -1 "$marker")
+    if [ -n "$project_kernel" ] && [ -d "$project_kernel" ]; then
+      echo ""
+      echo "--- 项目级 kernel (Layer 1.5) @ $proj_dir ---"
+      for f in "$project_kernel"/*.md; do
+        [ -f "$f" ] || continue
+        case "$(basename "$f")" in EXAMPLE-*) continue ;; esac
+        echo ""
+        cat "$f"
+      done
+    fi
+    break
+  fi
+  proj_dir=$(dirname "$proj_dir")
+done
+
+# === 加载项目 memory（最近 5 条 feedback，Layer 2 raw）===
 PROJECT_FEEDBACK="${CLAUDE_PROJECT_DIR:-$(pwd)}/.claude/memory/feedback"
 if [ -d "$PROJECT_FEEDBACK" ]; then
   count=0
