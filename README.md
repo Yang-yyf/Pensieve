@@ -55,7 +55,16 @@ echo "<项目级 kernel 目录绝对路径>" > <项目根>/.claude/pensieve-proj
 
 SessionStart 会自动扫描此 marker 文件。
 
-### 5. 你的第一条原则
+### 5. 运行 `/init` 配置向导(推荐)
+
+新 session 里跑 `/init`,它会:
+- 检查/创建 `~/.claude/pensieve.path` pointer 文件
+- 询问是否启用项目级 kernel(Layer 1.5)
+- 在项目 CLAUDE.md 写入 Pensieve 配置段(Sub-Agent Context Block 模板 + 常用命令清单)
+
+跳过这步也行,后续手动建 pointer 文件即可。
+
+### 6. 你的第一条原则
 
 删除 EXAMPLE 文件:
 
@@ -74,7 +83,7 @@ plugins/pensieve/
 ├── hooks/               ← SessionStart(注入原则 + 项目 pointer 扫描)
 ├── 2_memory/            ← 你的经验
 ├── 3_kernel/            ← 提炼后的原则
-├── 4_skills/            ← /learn /promote /retrospect
+├── 4_skills/            ← /init /learn /promote /retrospect
 ├── agents/              ← 你训练的 AI 分身
 └── growth-log.md        ← 进化日记
 ```
