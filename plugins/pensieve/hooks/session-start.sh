@@ -16,6 +16,8 @@ if [ -f "$PENSIEVE_PATH_FILE" ]; then
 fi
 KERNEL_DIR="$PLUGIN_DIR/3_kernel/principles"
 PATTERNS_DIR="$PLUGIN_DIR/2_memory/patterns"
+PREFS_DIR="$PLUGIN_DIR/2_memory/preferences"
+CONV_DIR="$PLUGIN_DIR/2_memory/conventions"
 LOG="$PLUGIN_DIR/growth-log.md"
 
 today=$(date +%Y-%m-%d)
@@ -57,6 +59,26 @@ if [ -d "$PATTERNS_DIR" ]; then
     [ -f "$f" ] || continue
     echo ""
     echo "--- Pensieve pattern: $(basename "$f") ---"
+    strip_frontmatter "$f"
+  done
+fi
+
+# === 加载 memory/preferences/ (工作风格,always-on) ===
+if [ -d "$PREFS_DIR" ]; then
+  for f in "$PREFS_DIR"/*.md; do
+    [ -f "$f" ] || continue
+    echo ""
+    echo "--- Pensieve preference: $(basename "$f") ---"
+    strip_frontmatter "$f"
+  done
+fi
+
+# === 加载 memory/conventions/ (项目/代码约定,always-on) ===
+if [ -d "$CONV_DIR" ]; then
+  for f in "$CONV_DIR"/*.md; do
+    [ -f "$f" ] || continue
+    echo ""
+    echo "--- Pensieve convention: $(basename "$f") ---"
     strip_frontmatter "$f"
   done
 fi
