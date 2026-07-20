@@ -83,7 +83,7 @@ plugins/pensieve/
 ├── hooks/               ← SessionStart(注入原则 + 项目 pointer 扫描)
 ├── 2_memory/            ← 你的经验
 ├── 3_kernel/            ← 提炼后的原则
-├── 4_skills/            ← /pensieve:init /pensieve:learn /pensieve:promote /pensieve:retrospect
+├── skills/            ← /pensieve:init /pensieve:learn /pensieve:promote /pensieve:retrospect
 ├── agents/              ← 你训练的 AI 分身
 └── growth-log.md        ← 进化日记
 ```
