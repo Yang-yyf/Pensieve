@@ -71,6 +71,17 @@ def extract_keywords(text):
     return kws
 
 
+def strip_frontmatter(content):
+    """剥离 YAML frontmatter(开头两个 --- 之间),节省注入 token。"""
+    if not content.startswith("---"):
+        return content
+    lines = content.split("\n")
+    for i in range(1, len(lines)):
+        if lines[i].strip() == "---":
+            return "\n".join(lines[i + 1:]).lstrip("\n")
+    return content
+
+
 def resolve_plugin_dir():
     """优先从 pointer 文件读 PENSIEVE_ROOT,失败回退到 CLAUDE_PLUGIN_ROOT。"""
     pensieve_path = os.path.expanduser("~/.claude/pensieve.path")
@@ -114,7 +125,7 @@ def read_memory_metadata(filepath):
         "title": title,
         "description": desc,
         "search_text": f"{title} {desc}",
-        "preview": content[:500],
+        "preview": strip_frontmatter(content)[:500],
     }
 
 
@@ -126,7 +137,7 @@ def main():
         sys.exit(0)
 
     user_msg = data.get("user_message", "")
-    if not user_msg or len(user_msg.strip()) < 2:
+    if not user_msg or len(user_msg.strip()) < 5:
         sys.exit(0)
 
     # 2. 定位 plugin dir
@@ -142,6 +153,16 @@ def main():
         os.path.join(plugin_dir, "2_memory/preferences"),
         os.path.join(plugin_dir, "2_memory/conventions"),
     ]
+
+    # 加上当前项目的 raw memory(Layer 2)
+    project_dir = os.environ.get("CLAUDE_PROJECT_DIR", "")
+    if project_dir:
+        search_dirs.extend([
+            os.path.join(project_dir, ".claude/memory/feedback"),
+            os.path.join(project_dir, ".claude/memory/patterns"),
+            os.path.join(project_dir, ".claude/memory/preferences"),
+            os.path.join(project_dir, ".claude/memory/conventions"),
+        ])
 
     # 4. 遍历每个 memory 文件,计算匹配分
     memories = []

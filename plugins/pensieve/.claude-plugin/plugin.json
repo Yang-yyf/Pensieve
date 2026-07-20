@@ -1,10 +1,10 @@
 {
   "name": "pensieve",
-  "description": "Pensieve — 把实践经验提炼为可迁移的理性认识",
-  "version": "0.1.0",
+  "description": "Pensieve — 工作伙伴记忆系统:踩坑/偏好/约定/原则,主动召回",
+  "version": "0.2.0",
   "author": {
     "name": "杨逸飞"
   },
   "license": "MIT",
-  "keywords": ["pensieve", "methodology", "knowledge-management"]
+  "keywords": ["pensieve", "methodology", "knowledge-management", "assistant"]
 }
