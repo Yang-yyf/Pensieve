@@ -1,10 +1,10 @@
 ---
-name: init
-description: 首次配置或重新配置 Pensieve。检查 pointer、可选启用项目级 kernel、在 CLAUDE.md 写入 Pensieve 配置段(Sub-Agent Context Block 模板 + 常用命令)。用户说 /pensieve:init、"配置 Pensieve""初始化 Pensieve""Pensieve 怎么用"时触发
+name: pensieve-init
+description: 首次配置或重新配置 Pensieve。检查 pointer、可选启用项目级 kernel、在 CLAUDE.md 写入 Pensieve 配置段(Sub-Agent Context Block 模板 + 常用命令)。用户说 /pensieve-init、"配置 Pensieve""初始化 Pensieve""Pensieve 怎么用"时触发
 tags: [pensieve, meta, init]
 ---
 
-# /pensieve:init — Pensieve 配置向导
+# /pensieve-init — Pensieve 配置向导
 
 首次安装后、或换项目时、或想重新配置时运行。一次性完成:
 
@@ -48,7 +48,7 @@ tags: [pensieve, meta, init]
 ````markdown
 ## Pensieve 配置
 
-> 由 `/pensieve:init` 生成。重新配置运行 `/pensieve:init`,手动编辑直接改下方值。
+> 由 `/pensieve-init` 生成。重新配置运行 `/pensieve-init`,手动编辑直接改下方值。
 > Pensieve 把 AI 协作中的经验/踩坑/判断从"脑子里"搬到"git 仓库里",原则通过 SessionStart 自动注入每个 session 作为 AI 行为约束。
 
 ### 当前配置
@@ -56,7 +56,7 @@ tags: [pensieve, meta, init]
 - **Layer 1 源仓库**: `<填入 PENSIEVE_ROOT>` — 原则与 memory 实际存这里,通过 `~/.claude/pensieve.path` 定位
 - **项目级 kernel (Layer 1.5)**: <未启用 | 已启用 → `<填入路径>`> — 项目专属架构决策,marker 在 `.claude/pensieve-project.path`
 - **审查提醒节奏**: daily: on / weekly: off / monthly: on
-  - 关 daily:运行 `/pensieve:retrospect --daily` 记一笔后当天不再提醒
+  - 关 daily:运行 `/pensieve-retrospect --daily` 记一笔后当天不再提醒
   - 关 monthly:把 `<PENSIEVE_ROOT>/plugins/pensieve/growth-log.md` 的 `last_monthly` 改成今天
 - **原则触发模式**:宽松(Claude 提示冲突后让用户决定);想改严格(主动拦截),把本行改为"严格"
 
@@ -76,11 +76,11 @@ tags: [pensieve, meta, init]
 
 ### 常用命令
 
-- `/pensieve:learn <描述>` — 记录一次踩坑/经验(也可扫当前对话找候选)
-- `/pensieve:promote <memory-path>` — 把已验证 2 次以上的 memory 升级为原则
-- `/pensieve:retrospect --daily | --monthly` — 日度笔记 / 月度审查清理
+- `/pensieve-learn <描述>` — 记录一次踩坑/经验(也可扫当前对话找候选)
+- `/pensieve-promote <memory-path>` — 把已验证 2 次以上的 memory 升级为原则
+- `/pensieve-retrospect --daily | --monthly` — 日度笔记 / 月度审查清理
 - 召唤 `code-reviewer-twin` agent — 带 Pensieve 原则的代码审查
-- `/pensieve:init` — 重新配置(本命令)
+- `/pensieve-init` — 重新配置(本命令)
 
 详见 `zean/docs/2026-07-16-pensieve-design.md`。
 ````
@@ -89,7 +89,7 @@ tags: [pensieve, meta, init]
 
 打印:
 - 配置摘要(Layer 1 路径、项目级 kernel 状态、CLAUDE.md 段已写)
-- 下一步建议:"试着运行 `/pensieve:learn <你最近踩的一个坑>` 记录第一条经验"
+- 下一步建议:"试着运行 `/pensieve-learn <你最近踩的一个坑>` 记录第一条经验"
 
 ## 边界
 
@@ -102,7 +102,7 @@ tags: [pensieve, meta, init]
 
 > Pensieve 这个名字取自 Harry Potter 的冥想盆(Pensieve)——把记忆从脑子里抽出来存进盆里,需要时回头审视、交叉对照。
 >
-> 这个 plugin 干同样的事:踩过的坑用 `/pensieve:learn` 记录到 memory,反复出现的模式用 `/pensieve:promote` 升级为原则 kernel,SessionStart 把原则自动注入每个 Claude session 作为行为约束。`/pensieve:retrospect` 定期审查清理。
+> 这个 plugin 干同样的事:踩过的坑用 `/pensieve-learn` 记录到 memory,反复出现的模式用 `/pensieve-promote` 升级为原则 kernel,SessionStart 把原则自动注入每个 Claude session 作为行为约束。`/pensieve-retrospect` 定期审查清理。
 >
 > 你的 Layer 1 个人仓库(私 fork)存原则,跨所有项目共享;每个项目可有自己的项目级 kernel(Layer 1.5)叠加在上面;项目内的 `.claude/memory/` 是 Layer 2 raw。
 >
