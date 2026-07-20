@@ -1,7 +1,7 @@
 ---
 name: pensieve-promote
-description: 把已积累的 memory 升级为 kernel 原则或试探规则。用户说 /pensieve-promote 或"升级为原则""通用化""这条经验可迁移"时触发
-tags: [os, meta, promote]
+description: 把已积累的 memory 升级为 kernel 原则或试探规则。用户说 /pensieve-promote 或"升级为原则""通用化""这条可迁移""提炼"时触发
+tags: [pensieve, meta, promote]
 ---
 
 # /pensieve-promote — 飞跃
@@ -20,40 +20,58 @@ tags: [os, meta, promote]
 
 用户说 `/pensieve-promote <memory-path>`。
 
+## 交互原则
+
+每一步展示中间结果,等用户确认。写文件前所有步骤可回退。
+
 ## 执行逻辑
 
-1. 读取指定的 memory 文件。路径支持两种:
-   - Layer 1 跨项目:`2_memory/feedback/xxx.md`(相对于 `PENSIEVE_ROOT/plugins/pensieve/`)
-   - 项目级:`.claude/memory/feedback/xxx.md`(相对于 `CLAUDE_PROJECT_DIR`)
-2. **判断该 memory 是否在 2 个以上场景/项目出现过**(关键门槛):
-   - 方法:遍历两个目录的每个 .md 文件:
-     - `PENSIEVE_ROOT/plugins/pensieve/2_memory/feedback/`
-     - `${CLAUDE_PROJECT_DIR}/.claude/memory/feedback/`
-   - 对每个文件,读 标题 + 错误/正确 段,自问:"这条描述的根本模式(不是表面场景)是否和正在 promote 的 memory 相同?"
-   - 计数相似条目(含当前条目)
-   - 2+ 次 → 继续;1 次 → 拒绝,告知"目前只观察到 1 次出现,建议积累更多验证后再升级";用户明确 bypass → 继续
-3. 提取可迁移命题:
-   - 去掉所有具体项目名、时间、技术栈
-   - 去掉项目风味用词(如"线上""博库""店铺"换成更通用的"生产""对外""系统")
-   - 保留可迁移的判断结构
-   - 每条原则正文 < 200 字
-4. 判断目标位置:
-   - 高度确信、反复验证 → `3_kernel/principles/<NNN>-<slug>.md`
-   - 还未完全确信 → `3_kernel/heuristics/<slug>.md`
-5. 进入 principles 时分配编号:扫描 `3_kernel/principles/[0-9]*-*.md` 找最大编号 N,新原则用 N+1(三位补零,如 `005-xxx.md`)
-6. 写 kernel 文件(在 PENSIEVE_ROOT 中),按下方模板。**填 参见 字段前**:扫所有已有原则的标题和 规则 段,自问"新原则和哪条共享触发条件或后果?",列相关原则。无相关则填"无",不要硬凑
-7. **回填原 memory 文件的 promoted 标记**(关键,/pensieve-retrospect 据此跳过):
-   - 位置:**frontmatter metadata 块内**(文件开头两个 `---` 之间),不是正文
-   - 添加两个字段:
-     ```
-     metadata:
-       ...(已有字段)
-       promoted: true
-       promoted_to: 3_kernel/principles/<NNN>-<slug>.md
-     ```
-   - 若原 memory 文件没有 frontmatter,先补一个再回填
-8. 在 PENSIEVE_ROOT 中 `git add` + `git commit -m "promote: <memory> → principle <NNN>-<slug>"`(NNN 与文件名一致,如 "→ principle 005-avoid-night-batch")
-   (若源在项目级,项目仓库自己也应 commit 一次标记变更)
+### 步骤 A:读 memory → 展示
+
+读指定 memory 文件。支持两种路径:
+- Layer 1:`2_memory/xxx/xxx.md`(相对于 `PENSIEVE_ROOT/plugins/pensieve/`)
+- 项目级:`.claude/memory/xxx/xxx.md`(相对于 `CLAUDE_PROJECT_DIR`)
+
+展示内容摘要:"这条 memory 讲的是:xxx。对么?"
+
+### 步骤 B:判断门槛 → 等确认
+
+遍历相关目录找语义相似的条目:
+- `PENSIEVE_ROOT/plugins/pensieve/2_memory/feedback/`
+- `${CLAUDE_PROJECT_DIR}/.claude/memory/feedback/`
+
+对每个文件,自问:"这条的根本模式(不是表面场景)是否相同?"
+
+- 只找到当前这一条 → 建议拒绝:"目前只观察到 1 次,积累更多验证后再升级,或者你非要现在升就告诉我 bypass"
+- 找到 2+ 次相似 → 列出来:"找到 N 条相似。继续?"
+- 用户明确 bypass → 不管次数,继续
+
+### 步骤 C:提取 + 写草稿 → 确认
+
+按下方模板写原则草稿:
+- 去项目名、时间、技术栈;去项目风味用词("线上"→"生产","博库"→"外部")
+- 正文 < 200 字
+- 编号:扫 `3_kernel/principles/[0-9]*-*.md` 找最大 N + 1(三位补零)
+- **参见**:扫已有原则,自问"新原则和哪条共享触发条件或后果?"列出;无相关则"无"
+
+展示草稿:"这是原则草稿——标题/规则/正向动作/参见 都对么?"
+
+### 步骤 D:判断位置 → 确认
+
+> 这条应该放 **[principles(硬约束) / heuristics(经验法则)]** —(理由)?
+
+用户确认或改选。
+
+### 步骤 E:回填原 memory + 写文件 → 最后确认
+
+展示要做的三件事:
+1. 写原则文件:`<path>`
+2. 回填原 memory metadata:加 `promoted: true` + `promoted_to:`
+3. git commit
+
+> 最后确认:执行以上三步?
+
+用户说"好" → 执行。若源是项目级的,项目仓库也单独 commit 标记变更。
 
 ## 原则文件模板
 

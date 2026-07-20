@@ -1,7 +1,7 @@
 ---
 name: pensieve-retrospect
 description: 定期审查 kernel 与 memory,清理重复/过时,合并矛盾条目。用户说 /pensieve-retrospect 或"审查""清理""回顾""月度总结"时触发
-tags: [os, meta, retrospect]
+tags: [pensieve, meta, retrospect]
 ---
 
 # /pensieve-retrospect — 审查

@@ -76,8 +76,9 @@ tags: [pensieve, meta, init]
 
 ### 常用命令
 
-- `/pensieve-learn <描述>` — 记录一次踩坑/经验(也可扫当前对话找候选)
-- `/pensieve-promote <memory-path>` — 把已验证 2 次以上的 memory 升级为原则
+- `/pensieve-learn <描述>` — 记录踩坑/偏好/约定(也可不描述,扫对话找候选)
+- `/pensieve-promote <memory-path>` — 把已验证 2+ 次的 memory 升级为原则
+- `/pensieve-forge <领域>` — 把原则+偏好锻造成你专属的 skill
 - `/pensieve-retrospect --daily | --monthly` — 日度笔记 / 月度审查清理
 - 召唤 `code-reviewer-twin` agent — 带 Pensieve 原则的代码审查
 - `/pensieve-init` — 重新配置(本命令)
@@ -89,7 +90,7 @@ tags: [pensieve, meta, init]
 
 打印:
 - 配置摘要(Layer 1 路径、项目级 kernel 状态、CLAUDE.md 段已写)
-- 下一步建议:"试着运行 `/pensieve-learn <你最近踩的一个坑>` 记录第一条经验"
+- 下一步建议:"现在试试 `/pensieve-learn`——扫一遍最近的对话,把值得记的东西挑出来。或者 `/pensieve-forge` 看看能从已有原则锻造出什么"
 
 ## 边界
 
@@ -100,10 +101,8 @@ tags: [pensieve, meta, init]
 
 ## Pensieve 简介(用于步骤 1 首次)
 
-> Pensieve 这个名字取自 Harry Potter 的冥想盆(Pensieve)——把记忆从脑子里抽出来存进盆里,需要时回头审视、交叉对照。
+> Pensieve 取自 Harry Potter 的冥想盆(Pensieve):把记忆从脑中抽出存进盆里,需要时回头审视、交叉对照。
 >
-> 这个 plugin 干同样的事:踩过的坑用 `/pensieve-learn` 记录到 memory,反复出现的模式用 `/pensieve-promote` 升级为原则 kernel,SessionStart 把原则自动注入每个 Claude session 作为行为约束。`/pensieve-retrospect` 定期审查清理。
+> **怎么用**:`/pensieve-learn` 记下踩坑/偏好/约定,`/pensieve-promote` 把已验证的模式升级为原则,`/pensieve-forge` 把积累锻造成你专属的 skill,SessionStart hook 自动注入原则 + 偏好 + 约定每个 session,UserPromptSubmit hook 按关键词主动召回相关记忆。
 >
-> 你的 Layer 1 个人仓库(私 fork)存原则,跨所有项目共享;每个项目可有自己的项目级 kernel(Layer 1.5)叠加在上面;项目内的 `.claude/memory/` 是 Layer 2 raw。
->
-> Git log 就是你的认知成长曲线,git blame 是每条原则的病史。
+> 四种 memory 类型:feedback(踩坑)、pattern(规律)、**preference(你的工作风格)**、**convention(项目/代码规矩)**。只有 feedback 是从错误学,其他三种是"你本来就是这样工作的"。
