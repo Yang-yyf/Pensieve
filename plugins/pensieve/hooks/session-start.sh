@@ -53,33 +53,42 @@ if [ -d "$KERNEL_DIR" ]; then
   done
 fi
 
-# === 加载 memory/patterns/ ===
+# === 加载 memory/patterns/(最近 10 条,防 token 爆炸) ===
 if [ -d "$PATTERNS_DIR" ]; then
-  for f in "$PATTERNS_DIR"/*.md; do
+  count=0
+  for f in $(ls -t "$PATTERNS_DIR"/*.md 2>/dev/null); do
     [ -f "$f" ] || continue
+    [ $count -ge 10 ] && break
     echo ""
     echo "--- Pensieve pattern: $(basename "$f") ---"
     strip_frontmatter "$f"
+    count=$((count + 1))
   done
 fi
 
-# === 加载 memory/preferences/ (工作风格,always-on) ===
+# === 加载 memory/preferences/ (工作风格,最近 10 条 always-on) ===
 if [ -d "$PREFS_DIR" ]; then
-  for f in "$PREFS_DIR"/*.md; do
+  count=0
+  for f in $(ls -t "$PREFS_DIR"/*.md 2>/dev/null); do
     [ -f "$f" ] || continue
+    [ $count -ge 10 ] && break
     echo ""
     echo "--- Pensieve preference: $(basename "$f") ---"
     strip_frontmatter "$f"
+    count=$((count + 1))
   done
 fi
 
-# === 加载 memory/conventions/ (项目/代码约定,always-on) ===
+# === 加载 memory/conventions/ (项目/代码约定,最近 10 条 always-on) ===
 if [ -d "$CONV_DIR" ]; then
-  for f in "$CONV_DIR"/*.md; do
+  count=0
+  for f in $(ls -t "$CONV_DIR"/*.md 2>/dev/null); do
     [ -f "$f" ] || continue
+    [ $count -ge 10 ] && break
     echo ""
     echo "--- Pensieve convention: $(basename "$f") ---"
     strip_frontmatter "$f"
+    count=$((count + 1))
   done
 fi
 
