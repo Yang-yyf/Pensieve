@@ -1,13 +1,15 @@
 # Pensieve
 
-**Pensieve** 是一个 Claude Code plugin，帮你把跟 AI 协作中的经验、原则、决策
-从"脑子里"搬到"git 仓库里"。
+**Pensieve** 是一个 Claude Code plugin,作为你 AI 协作的**工作伙伴**——
+不止记录踩坑,还记住你的偏好、约定、工作风格,主动在合适的时候召回相关记忆。
+名字取自 Harry Potter 的冥想盆(Pensieve):把记忆从脑中抽出存进盆里,需要时回头审视、交叉对照。
 
 ## 核心理念
 
-- **代码是 AI 吐出来的，文件夹里放的是决策**
-- **旧项目结构 = 空间维度（src/test/docs）；新项目结构 = 时间维度（raw → memory → kernel）**
-- **Git log = 认知成长曲线；git blame = 每条原则的病史**
+- **代码是 AI 吐出来的,文件夹里放的是决策**
+- **旧项目结构 = 空间维度(src/test/docs);新项目结构 = 时间维度(raw → memory → kernel)**
+- **Git log = 认知成长曲线;git blame = 每条原则的病史**
+- **不只是踩坑档案,也是工作伙伴**——偏好/约定/原则/模式,Pensieve 都记
 
 ## 多层架构
 
@@ -80,13 +82,31 @@ rm plugins/pensieve/3_kernel/decisions/EXAMPLE-decision.md
 
 ```
 plugins/pensieve/
-├── hooks/               ← SessionStart(注入原则 + 项目 pointer 扫描)
+├── hooks/               ← SessionStart(注入原则/偏好/约定)+ UserPromptSubmit(主动召回)
 ├── 2_memory/            ← 你的经验
+│   ├── feedback/        ← 踩坑记录(错误驱动)
+│   ├── patterns/        ← 结构性规律(反复观察)
+│   ├── preferences/     ← 工作风格偏好(always-on)
+│   └── conventions/     ← 项目/代码约定(always-on)
 ├── 3_kernel/            ← 提炼后的原则
-├── skills/            ← /pensieve:init /pensieve:learn /pensieve:promote /pensieve:retrospect
+├── skills/              ← /pensieve:init /pensieve:learn /pensieve:promote /pensieve:retrospect
 ├── agents/              ← 你训练的 AI 分身
 └── growth-log.md        ← 进化日记
 ```
+
+## 工作机制
+
+**SessionStart hook**(session 起时):
+- 注入 principles(行为约束)
+- 注入 patterns + preferences + conventions(always-on 工作风格)
+- 注入项目 raw 最近 5 条(项目上下文)
+- 检查 daily/weekly/monthly 审查提醒
+
+**UserPromptSubmit hook**(每次用户发消息时):
+- 扫描用户消息的关键词(英文 4+ 字 / 中文 2-gram)
+- grep principles + 4 类 memory 找匹配
+- 命中 top 3 注入 Claude context 作为"主动召回"
+- Claude 自然引用相关记忆,无需手动 grep
 
 ## License
 
