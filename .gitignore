@@ -2,11 +2,15 @@
 .DS_Store
 
 # 个人内容只活在 fork（Layer 1）里，Layer 0 不跟踪
-plugins/ai-coding-os/2_memory/feedback/*
-!plugins/ai-coding-os/2_memory/feedback/.gitkeep
-plugins/ai-coding-os/2_memory/patterns/*
-!plugins/ai-coding-os/2_memory/patterns/.gitkeep
-plugins/ai-coding-os/3_kernel/principles/[0-9]*
-plugins/ai-coding-os/3_kernel/decisions/[0-9]*
-plugins/ai-coding-os/3_kernel/heuristics/*
-!plugins/ai-coding-os/3_kernel/heuristics/.gitkeep
+plugins/pensieve/2_memory/feedback/*
+!plugins/pensieve/2_memory/feedback/.gitkeep
+plugins/pensieve/2_memory/patterns/*
+!plugins/pensieve/2_memory/patterns/.gitkeep
+plugins/pensieve/2_memory/preferences/*
+!plugins/pensieve/2_memory/preferences/.gitkeep
+plugins/pensieve/2_memory/conventions/*
+!plugins/pensieve/2_memory/conventions/.gitkeep
+plugins/pensieve/3_kernel/principles/[0-9]*
+plugins/pensieve/3_kernel/decisions/[0-9]*
+plugins/pensieve/3_kernel/heuristics/*
+!plugins/pensieve/3_kernel/heuristics/.gitkeep
