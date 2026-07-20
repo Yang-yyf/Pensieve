@@ -1,10 +1,10 @@
 ---
-name: retrospect
-description: 定期审查 kernel 与 memory,清理重复/过时,合并矛盾条目。用户说 /pensieve:retrospect 或"审查""清理""回顾""月度总结"时触发
+name: pensieve-retrospect
+description: 定期审查 kernel 与 memory,清理重复/过时,合并矛盾条目。用户说 /pensieve-retrospect 或"审查""清理""回顾""月度总结"时触发
 tags: [os, meta, retrospect]
 ---
 
-# /pensieve:retrospect — 审查
+# /pensieve-retrospect — 审查
 
 ## Pensieve 源仓库定位
 
@@ -12,9 +12,9 @@ tags: [os, meta, retrospect]
 
 ## 触发
 
-- `/pensieve:retrospect --daily` — 日度笔记（30 秒）
-- `/pensieve:retrospect --monthly` — 月度审查（20 分钟）
-- v0.2: `/pensieve:retrospect --weekly`
+- `/pensieve-retrospect --daily` — 日度笔记（30 秒）
+- `/pensieve-retrospect --monthly` — 月度审查（20 分钟）
+- v0.2: `/pensieve-retrospect --weekly`
 
 ## --daily
 

@@ -1,10 +1,10 @@
 ---
-name: learn
-description: 记录踩坑/经验/偏好/约定/模式。Pensieve 的工作伙伴记忆库,不止是错误档案。用户说 /pensieve:learn、或"记录一下""踩坑""教训""偏好""约定""我喜欢""这个项目"时触发
+name: pensieve-learn
+description: 记录踩坑/经验/偏好/约定/模式。Pensieve 的工作伙伴记忆库,不止是错误档案。用户说 /pensieve-learn、或"记录一下""踩坑""教训""偏好""约定""我喜欢""这个项目"时触发
 tags: [pensieve, meta, learn]
 ---
 
-# /pensieve:learn — 记录到 Pensieve
+# /pensieve-learn — 记录到 Pensieve
 
 Pensieve 是工作伙伴,不是只装踩坑。**四种类型**覆盖协作中所有该记的东西。
 
@@ -14,7 +14,7 @@ Pensieve 是工作伙伴,不是只装踩坑。**四种类型**覆盖协作中所
 
 ## 触发
 
-用户说 `/pensieve:learn` 或 `/pensieve:learn <描述>`。
+用户说 `/pensieve-learn` 或 `/pensieve-learn <描述>`。
 
 ## 执行逻辑
 
