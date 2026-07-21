@@ -8,8 +8,10 @@ plugins/pensieve/2_memory/patterns/*
 !plugins/pensieve/2_memory/patterns/.gitkeep
 plugins/pensieve/2_memory/preferences/*
 !plugins/pensieve/2_memory/preferences/.gitkeep
+!plugins/pensieve/2_memory/preferences/EXAMPLE-*.md
 plugins/pensieve/2_memory/conventions/*
 !plugins/pensieve/2_memory/conventions/.gitkeep
+!plugins/pensieve/2_memory/conventions/EXAMPLE-*.md
 plugins/pensieve/3_kernel/principles/[0-9]*
 plugins/pensieve/3_kernel/decisions/[0-9]*
 plugins/pensieve/3_kernel/heuristics/*
