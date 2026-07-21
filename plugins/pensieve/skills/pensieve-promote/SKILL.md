@@ -18,7 +18,7 @@ tags: [pensieve, meta, promote]
 
 ## 触发
 
-用户说 `/pensieve-promote <memory-path>`。
+`/pensieve-promote <memory-path>` 或 `/pensieve-promote`(不带路径,会列候选)。
 
 ## 交互原则
 
@@ -28,9 +28,11 @@ tags: [pensieve, meta, promote]
 
 ### 步骤 A:读 memory → 展示
 
-读指定 memory 文件。支持两种路径:
+**用户给了路径** → 直接读。支持:
 - Layer 1:`2_memory/xxx/xxx.md`(相对于 `PENSIEVE_ROOT/plugins/pensieve/`)
 - 项目级:`.claude/memory/xxx/xxx.md`(相对于 `CLAUDE_PROJECT_DIR`)
+
+**没给路径** → 列出所有可 promote 的候选(扫 `2_memory/feedback/` + `2_memory/patterns/` + 项目 `.claude/memory/feedback/`,跳过 `promoted: true` 的),每个一行(标题 + 日期),让用户挑。
 
 展示内容摘要:"这条 memory 讲的是:xxx。对么?"
 
