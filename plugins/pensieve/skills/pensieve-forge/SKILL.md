@@ -111,10 +111,16 @@ mkdir -p <scope-path>/skills/<name>/
 # 写入 SKILL.md
 ```
 
-写入后提示用户:
-> skill 已生成到 `~/.claude/skills/<name>/`。  
-> Claude Code 自动发现用户级 skill,无需重装 plugin。  
-> 试试: 在对话中说"用 `<name>` skill 审一下这段代码"
+写入后告诉用户怎么用:
+
+> skill 已生成到 `~/.claude/skills/<name>/`。
+>
+> **怎么调用**:新开 session 或 `/clear` 后,在对话里说"**用 `<name>` 来 xxx**"
+> (如"用 yyf-code-review 审一下这个 PR"),Claude Code 会自动发现并加载该 skill。
+>
+> 也可以直接 `/` 看 slash 菜单,应该出现 `/<name>`。
+>
+> skill 是用户级,跟 `/feature-dev` 同层级,不会随 plugin uninstall 消失。
 
 ## 边界
 

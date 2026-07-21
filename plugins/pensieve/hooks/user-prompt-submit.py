@@ -36,16 +36,16 @@ STOPWORDS = {
     "进行", "通过", "使用", "利用", "借助",
     "然后", "所以", "因为", "但是", "不过", "而且", "或者", "还是",
     "已经", "正在", "即将", "马上", "现在", "之前", "之后",
-    "的话", "是的", "对的", "好的", "可以",
+    "的话", "是的", "对的", "好的",
     # 中文 bigram 噪音(单字组合无意义)
     "我们", "你们", "他们", "这是", "那是", "就是", "还有", "没有",
-    "什么", "怎么", "为何", "如何", "这样", "那样", "这一", "那一",
+    "为何", "这样", "那样", "这一", "那一",
     # 英文 stopword
-    "this", "that", "with", "from", "have", "will", "would", "could",
+    "this", "that", "with", "from", "have", "has", "will", "would", "could",
     "should", "their", "there", "what", "when", "where", "which", "they",
-    "them", "your", "yours", "have", "has", "been", "were", "into",
+    "them", "your", "yours", "been", "were", "into",
     "the", "and", "for", "not", "are", "but", "all", "can", "may",
-    "shall", "must", "here", "than", "then", "this", "that",
+    "shall", "must", "here", "than", "then",
 }
 
 
