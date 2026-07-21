@@ -19,7 +19,7 @@ tags: [pensieve, meta, retrospect]
 ## --daily
 
 1. 询问:"今天学到了什么?(一句话即可)"
-2. 在 `growth-log.md` 的"日度笔记"表格(`| 日期 | 笔记 |`)追加一行,日期为今天,笔记为用户回答
+2. 在 `growth-log.md` 的"日度笔记"表格(`| 日期 | 笔记 |`)追加一行,日期为今天,笔记为用户回答。**先删掉占位行 `| — | 尚未开始 |`**(如果还在的话)
 3. 把 frontmatter 的 `last_daily: YYYY-MM-DD` 改为今天
 
 ## --monthly
@@ -37,5 +37,5 @@ tags: [pensieve, meta, retrospect]
    - 列出嫌疑对,建议合并或择优保留
 6. 列出 `3_kernel/heuristics/` → 升级/保持/废弃
 7. 用户逐条确认后执行
-8. 在 `growth-log.md` 的"月度审查"表格(`| 日期 | 清理 | 升级 | 废弃 |`)追加一行,日期为今天,清理/升级/废弃填本次相应数量;并把 frontmatter 的 `last_monthly: YYYY-MM-DD` 改为今天
+8. 在 `growth-log.md` 的"月度审查"表格(`| 日期 | 清理 | 升级 | 废弃 |`)追加一行,日期为今天,清理/升级/废弃填本次相应数量。**先删掉占位行 `| — | 尚未开始 |`**;并把 frontmatter 的 `last_monthly: YYYY-MM-DD` 改为今天
 9. `git commit -m "retrospect: YYYY-MM-DD (monthly)"`
