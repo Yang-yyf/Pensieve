@@ -1,10 +1,10 @@
 {
   "name": "pensieve",
-  "description": "Pensieve — 工作伙伴记忆系统:踩坑/偏好/约定/原则,主动召回",
-  "version": "0.2.0",
+  "description": "Pensieve v2 — 程序员 agent：explore / spec / dev / review 四件套，spec+goal 引擎驱动",
+  "version": "0.3.0",
   "author": {
     "name": "杨逸飞"
   },
   "license": "MIT",
-  "keywords": ["pensieve", "methodology", "knowledge-management", "assistant"]
+  "keywords": ["pensieve", "agent", "explore", "spec", "dev", "review", "goal-driven"]
 }

@@ -1,113 +1,80 @@
-# Pensieve
+# Pensieve v2
 
-**Pensieve** 是一个 Claude Code plugin,作为你 AI 协作的**工作伙伴**——
-不止记录踩坑,还记住你的偏好、约定、工作风格,主动在合适的时候召回相关记忆。
-名字取自 Harry Potter 的冥想盆(Pensieve):把记忆从脑中抽出存进盆里,需要时回头审视、交叉对照。
+**一个程序员 agent**——跨完整工作流的副驾，不在流程外面。
 
-## 核心理念
+v1 是个"事后记忆库"，离实际开发太远。v2 把方向重写：站在写代码的关键时刻——
+改老功能时主动 explore、新需求时主动 spec、完成时主动 review。每一步是 sub-goal，每个 sub-goal 一个 commit。
 
-- **代码是 AI 吐出来的,文件夹里放的是决策**
-- **旧项目结构 = 空间维度(src/test/docs);新项目结构 = 时间维度(raw → memory → kernel)**
-- **Git log = 认知成长曲线;git blame = 每条原则的病史**
-- **不只是踩坑档案,也是工作伙伴**——偏好/约定/原则/模式,Pensieve 都记
+## 4 个 playbook（核心能力）
 
-## 多层架构
+| 命令 | 做什么 |
+|------|--------|
+| `/pensieve-explore` | 改老功能前调研 + 走读代码（静态调研 + 动态模拟运行） |
+| `/pensieve-spec` | 把模糊需求写成可执行 spec（背景/输入输出/边界/完成标准） |
+| `/pensieve-dev` | 拆 sub-goals + 执行（写代码+编译+测试+commit） |
+| `/pensieve-review` | 走读 diff（技术走读 + 语义走读 + 原则检查） |
 
-```
-Layer 0:   开源模板(本 repo)             ← marketplace,从这里 fork
-Layer 1:   你的个人成长版(private fork)  ← 跨所有项目的原则/记忆
-Layer 1.5: 项目级 plugin(可选)           ← 单个项目的架构决策/契约
-Layer 2:   实际项目                      ← 各自的 .claude/memory/ raw
-```
+## 总入口
 
-详见 `zean/docs/2026-07-16-pensieve-design.md` §11-12。
+- `/pensieve` — 空参给状态卡片；有 prompt 自动路由到对应 playbook
 
-## 快速开始
+## 主动在场
 
-### 1. Fork 本仓库
+UserPromptSubmit hook 扫关键词，命中场景输出一行提醒（不强介入）：
+- "改现有 X" → 提示 `/pensieve-explore`
+- "实现新 Y" → 提示 `/pensieve-spec`
+- "改完了/PR" → 提示 `/pensieve-review`
 
-### 2. 注册你的 fork 为 marketplace
+## 底层（复用原生 agent，不重写）
 
-支持 GitHub URL 或本地路径:
+- `Explore agent` → 静态调研
+- `bug-analyzer agent` → 动态走读（模拟执行路径）
+- `feature-dev:code-architect` → 需求架构
+- `feature-dev:code-reviewer` → diff 走读
+- `code-reviewer-twin`（自带）→ 带 Pensieve 原则的 review
 
-```
-/plugin marketplace add https://github.com/<你的用户名>/pensieve
-# 或本地路径:
-/plugin marketplace add /path/to/your/pensieve-fork
-
-/plugin install pensieve@pensieve
-```
-
-### 3. 登记源仓库路径
-
-`/pensieve-learn` `/pensieve-promote` 的写入要进你的 fork(源仓库),不是插件缓存:
-
-```bash
-echo "<你的 fork 本地路径>" > ~/.claude/pensieve.path
-```
-
-### 4. (可选)项目级 kernel
-
-若要在某项目启用项目级 kernel(Layer 1.5):
-
-```bash
-mkdir -p <项目根>/.claude
-echo "<项目级 kernel 目录绝对路径>" > <项目根>/.claude/pensieve-project.path
-```
-
-SessionStart 会自动扫描此 marker 文件。
-
-### 5. 运行 `/pensieve-init` 配置向导(推荐)
-
-新 session 里跑 `/pensieve-init`,它会:
-- 检查/创建 `~/.claude/pensieve.path` pointer 文件
-- 询问是否启用项目级 kernel(Layer 1.5)
-- 在项目 CLAUDE.md 写入 Pensieve 配置段(Sub-Agent Context Block 模板 + 常用命令清单)
-
-跳过这步也行,后续手动建 pointer 文件即可。
-
-### 6. 你的第一条原则
-
-删除 EXAMPLE 文件:
-
-```bash
-cd <你的 fork 路径>
-rm plugins/pensieve/3_kernel/principles/EXAMPLE-principle.md
-rm plugins/pensieve/3_kernel/decisions/EXAMPLE-decision.md
-```
-
-用 `/pensieve-learn` 记录你的第一条经验,然后用 `/pensieve-promote` 把它升级为原则。
-
-## 目录结构
+## 持久化
 
 ```
 plugins/pensieve/
-├── hooks/               ← SessionStart(注入原则/偏好/约定)+ UserPromptSubmit(主动召回)
-├── 2_memory/            ← 你的经验
-│   ├── feedback/        ← 踩坑记录(错误驱动)
-│   ├── patterns/        ← 结构性规律(反复观察)
-│   ├── preferences/     ← 工作风格偏好(always-on)
-│   └── conventions/     ← 项目/代码约定(always-on)
-├── 3_kernel/            ← 提炼后的原则
-├── skills/              ← /pensieve-init /pensieve-learn /pensieve-promote /pensieve-retrospect
-├── agents/              ← 你训练的 AI 分身
-└── growth-log.md        ← 进化日记
+├── spec/<goal-name>.md          # 每个目标的合约
+├── explore/<goal-name>/
+│   ├── static.md                # 静态调研产出
+│   ├── dynamic.md               # 动态走读产出
+│   └── summary.md               # 汇总
+├── review/<goal-name>.md        # review 报告
+├── .state/current.json          # 跨 session 状态
+├── 3_kernel/principles/         # 4 条硬约束（review 时检查）
+├── 2_memory/                    # 跨会话知识（保留 v1，作为 agent 的知识底座）
+└── skills/                      # 5 个 skill 文件
 ```
 
-## 工作机制
+## 约束（贯穿所有 playbook）
 
-**SessionStart hook**(session 起时):
-- 注入 principles(行为约束)
-- 注入 patterns + preferences + conventions(always-on 工作风格)
-- 注入项目 raw 最近 5 条(项目上下文)
-- 检查 daily/weekly/monthly 审查提醒
+1. 所有能力跑在 spec+goal 引擎上，每步是 sub-goal，每个 sub-goal 一个 commit
+2. explore 必须两路：静态调研 + 动态走读（缺一不可）
+3. review 必须两路：技术走读 + 语义走读（缺一不可）
+4. 改老功能必须有 explore 前置，没 explore summary 不接 spec
 
-**UserPromptSubmit hook**(每次用户发消息时):
-- 扫描用户消息的关键词(英文 4+ 字 / 中文 2-gram)
-- grep principles + 4 类 memory 找匹配
-- 命中 top 3 注入 Claude context 作为"主动召回"
-- Claude 自然引用相关记忆,无需手动 grep
+## v1 → v2 变化
 
-## License
+**砍掉**：`/pensieve-learn`、`/pensieve-promote`、`/pensieve-forge`、`/pensieve-retrospect`、`/pensieve-init`
+（这套"记忆库 + 反思"形态不实用，离开发流程太远）
 
-MIT
+**保留**：`/pensieve-goal`（作为引擎参考，不暴露）、4 条 kernel 原则、2_memory（作为知识底座）
+
+**新增**：4 个 playbook（explore/spec/dev/review）+ `/pensieve` 总入口 + 轻量关键词 hook
+
+## 安装
+
+```bash
+# 1. fork & clone
+git clone git@github.com:Yang-yyf/Pensieve.git
+
+# 2. 注册为 marketplace
+/plugin marketplace add /path/to/Pensieve
+/plugin install pensieve@pensieve
+
+# 3. 登记 fork 路径（写入 fork 本地路径到 pointer 文件）
+echo "/path/to/Pensieve" > ~/.claude/pensieve.path
+```
