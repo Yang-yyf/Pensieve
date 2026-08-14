@@ -98,7 +98,7 @@ dynamic_pricing schema:
 - `INSERT INTO dynamic_pricing.t_aimd_shop_config VALUES ('1000037', true, '0 30 9 * * ?', '{...默认参数...}')`
 - plpython3u 扩展**由用户协调 DBA 安装**（见下方"DBA 需求清单"），不在 SG1 范围
 
-### SG2: init_state UDF（plpython3u）
+### SG2: init_state UDF（PL/pgSQL，见"关键技术决策"变更记录）
 **完成判据**：UDF 跑通；能正确初始化 1000037（188k 品）；新店铺也能跑。
 
 - `CREATE FUNCTION dynamic_pricing.init_state(init_date DATE, shop_code TEXT) RETURNS TEXT LANGUAGE plpython3u`
@@ -106,7 +106,7 @@ dynamic_pricing schema:
 - 从 `t_aimd_shop_config.params_json` 读参数（LAMBDA/PI_MIN 等）
 - 跨 schema 读 `bookuu.t_product_shop_mapping` / `t_book_cost` / `t_shop_product_daily_stats`
 
-### SG3: run_daily UDF（plpython3u，6 步骤）
+### SG3: run_daily UDF（PL/pgSQL，6 步骤）
 **完成判据**：UDF 跑通 8-13（需先确认动销数据已同步）；输出到 t_aimd_price_pending + t_store_price。
 
 - `CREATE FUNCTION dynamic_pricing.run_daily(stat_date DATE, shop_code TEXT) RETURNS JSONB`
@@ -146,21 +146,24 @@ dynamic_pricing schema:
 
 ## 完成标准
 
-- [ ] 6 个 sub-goal commit 落地
-- [ ] scheduler mvn compile + 单测全过
-- [ ] store-patrol mvn compile + 单测全过
-- [ ] UDF 在 10.90.1.22 上能跑（验 8-13 数据）
-- [ ] 钉钉收到 AIMD 失败/空跑告警（接现有钉钉告警系统）
-- [ ] manual pipeline 能从 t_aimd_price_pending 拉行改价（验一两个品）
-- [ ] spec 与代码一致（变更先改 spec）
+- [x] 6 个 sub-goal commit 落地（94c0b15 / 1ff2f98 / f56f43e / fcd1d84 / a0e89a2 / 252b8d2 / 7e36fd0）
+- [x] scheduler mvn compile 过（无单测，src/test 不存在）
+- [x] store-patrol mvn compile 过
+- [x] UDF 在 10.90.1.22 上能跑（8-13 双跑 vs Python 交付包 0 diff 已验证）
+- [ ] 钉钉收到 AIMD 失败/空跑告警（接现有钉钉告警系统，代码已接，未线上验证）
+- [ ] manual pipeline 能从 t_aimd_price_pending 拉行改价（代码已接，未线上验证）
+- [x] spec 与代码一致（变更先改 spec）
 
 ## 关键技术决策
 
-### 为什么用 plpython3u（不 Java 重写）
-- 算法复杂（EWMA / 价格带 / 成本冲击），Python 已有完整实现 + 已验证 8-11/8-12 数据
-- 重写 Java 风险高（300 行算法逻辑），易引入 bug
-- plpython3u 进程内执行，比 Python 脚本 + psycopg2 性能更好（省 round-trip）
-- 代价：需要 DBA 装 plpython3u（superuser 权限），需要 UDF 用 SPI 而非 psycopg2
+### 为什么用 PL/pgSQL UDF（变更记录）
+- **原方案 plpython3u**：阿里云 RDS 不支持 untrusted language，装不了 → 作废
+- PL/pgSQL 是 PG 原生语言，RDS 100% 支持，零 DBA 依赖
+- AIMD 算法 90% 是 set-based SQL（新书/成本/非动销/快照），只有涨价阶梯有逐品逻辑，
+  用 `LATERAL + jsonb_array_elements` 完全 SQL 化（无需循环）
+- 性能：PL/pgSQL 进程内执行，比外部 Python 脚本 + psycopg2 省全部 round-trip
+- 参数从 `t_aimd_shop_config.params_json` 读，价格带/涨价阶梯用 jsonb 原生操作
+- 代价：无单测框架（用 RAISE NOTICE 调试）；对比 Java 实现可测性差
 
 ### 为什么 source=init 而不是新 source=aimd
 - 用户明确要求统一 init 优先级
@@ -190,42 +193,27 @@ dynamic_pricing schema:
 | 钉钉被 AIMD 失败告警刷屏 | 低 | 复用现有告警；AIMD 任务在 scheduler 内，TaskExecutor 已有去重机制（后续可加） |
 | 现有 8-11/8-12 跑过的数据要重跑吗 | 低 | 不重跑；8-13 起在 dynamic_pricing 新表上跑 |
 
-## DBA 需求清单（用户协调，不阻塞 SG1）
+## DBA 需求清单
 
-| # | 操作 | 权限 | 用途 | 阻塞 |
-|---|------|------|------|------|
-| 1 | `CREATE EXTENSION IF NOT EXISTS plpython3u` | superuser | 让 PG 能跑 Python UDF（SG2/SG3 依赖） | SG2/SG3 |
-| 2 | 授权 `bookmind` 用户 `USAGE ON SCHEMA dynamic_pricing` | superuser | 让应用用户能调 UDF | SG5 |
-| 3 | 授权 `bookmind` 在 dynamic_pricing schema 下 `CREATE FUNCTION` | superuser | 应用用户能 CREATE FUNCTION（如果让应用建 UDF） | SG2/SG3 |
-| 4 | 确认 PG 容器/镜像里有 Python 3 解释器 | DBA | plpython3u 依赖系统 Python | SG2/SG3 |
+~~原清单（plpython3u 相关 4 项）已作废~~ — 阿里云 RDS 不支持 untrusted language（plpython3u），
+UDF 全部改用 **PL/pgSQL**（PG 原生，RDS 100% 支持），**不再需要任何 DBA 操作**。
 
-**最小请求**（发给 DBA 的话术）：
-
-> 在生产 PG（10.90.1.22:8321）上执行：
-> ```sql
-> CREATE EXTENSION IF NOT EXISTS plpython3u;
-> ```
-> 用 superuser 执行。执行后验证：
-> ```sql
-> DO $$ import sys; plpy.notice(sys.version) $$ LANGUAGE plpython3u;
-> ```
-> 应返回 Python 版本号。
-
-执行完通知我，我开始 SG2/SG3 UDF。
-
-## 关键文件清单
+## 文件清单（落地实况，与原规划有命名偏差）
 
 ### 新建
 - `docs/design/AIMD_v3_集成.md`
 - `docs/ops/aimd-setup.md`
-- `docs/sql/dynamic_pricing/` — schema + UDF SQL 文件
+- `docs/sql/dynamic_pricing/` — schema + UDF SQL 文件（**实际编号与规划不同**）：
   - `01_schema.sql` — CREATE SCHEMA + 表 + 分区
-  - `02_init_state_udf.sql` — init_state UDF
-  - `03_run_daily_udf.sql` — run_daily UDF
-  - `04_migrate_state.sql` — 从 bookuu 迁移状态
+  - `02_init_config.sql` — 店铺配置 + params_json 默认参数
+  - `03_copy_state.sql` — 从 bookuu.book_price_state 复制状态（原规划 04_migrate_state.sql）
+  - `04_helpers_udf.sql` — band_value 等辅助函数
+  - `05_init_state_udf.sql` — init_state UDF（原规划 02_init_state_udf.sql）
+  - `06_run_daily_udf.sql` — run_daily UDF（原规划 03_run_daily_udf.sql）
 - `scheduler/src/main/java/org/yunzhen/scheduler/task/BookPricingAIMDTask.java`
-- `store-patrol/src/main/java/org/yunzhen/storepatrol/manualprice/service/AimdPendingSync.java`（or 直接改 ManualPricePipeline）
+- store-patrol 未建 AimdPendingSync，**直接改 ManualPricePipeline**（符合极简）
 
 ### 改造
-- `store-patrol/.../manualprice/service/ManualPricePipeline.java` — 占坑 SQL 加 UNION aimd pending
-- `scheduler/.../config/TaskInitializer.java` — 注册 BOOK_PRICING_AIMD 任务
+- `store-patrol/.../manualprice/service/ManualPricePipeline.java` — runBatch 混入 aimd PENDING 行 + aimdSync 回写
+- `store-patrol/.../manualprice/service/ManualPriceQueryService.java` — aimdPending 统计 + SYNCED 僵尸恢复
+- `scheduler/.../config/TaskInitializer.java` — 注册 BOOK_PRICING_AIMD + cron 动态读取
