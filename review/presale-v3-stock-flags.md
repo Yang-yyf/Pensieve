@@ -37,4 +37,4 @@ data-service（upflags 代理）+ store-patrol（v3 pipeline）+ scheduler（天
 
 ## 结论
 
-Critical 2 条待修（C1 失败降级记 FAILED 让次日重试；C2 拆行或 DISTINCT ON 消除跨行拼接）。S1 顺手修。**修完才 PR。**
+**已修复（f82db9c8，2026-08-26）**：C1 失败降级改整链 FAILED（upflags/binding/反查失败抛异常，scheduler 幂等守卫不挡 FAILED → 次日重试）；C2 GROUP BY+MAX 改 DISTINCT ON 同行取值；S1 arrivalDate try-parse。单测扩到 9 例全过，三模块编译过。**可以 PR。**
